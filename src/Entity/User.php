@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -49,6 +51,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $lastName;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Checklist::class, mappedBy="user")
+     */
+    private $checklists;
+
+    public function __construct()
+    {
+        $this->checklists = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -158,6 +170,36 @@ class User implements UserInterface
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Checklist[]
+     */
+    public function getChecklists(): Collection
+    {
+        return $this->checklists;
+    }
+
+    public function addChecklist(Checklist $checklist): self
+    {
+        if (!$this->checklists->contains($checklist)) {
+            $this->checklists[] = $checklist;
+            $checklist->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChecklist(Checklist $checklist): self
+    {
+        if ($this->checklists->removeElement($checklist)) {
+            // set the owning side to null (unless already changed)
+            if ($checklist->getUser() === $this) {
+                $checklist->setUser(null);
+            }
+        }
 
         return $this;
     }
