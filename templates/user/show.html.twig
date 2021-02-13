@@ -4,18 +4,23 @@
 
 {% block body %}
     <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+    <h2 class="d-inline">Profile</h2>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="d-inline float-right btn btn-primary" href="{{ path('user_edit', {'id': user.id}) }}">Edit Profile</a>
+    {% endif %}
+    {% if is_granted('ROLE_ALLOWED_TO_SWITCH') %}
+        <a class="d-inline float-right btn btn-primary" href="/user/profile?_switch_user={{ user.username }}">Login
+            As</a>
+    {% endif %}
 
-    <a class="btn btn-primary" href="{{ path('user_edit', {'id': user.id}) }}">Edit Profile</a>
-
-    {{ include('user/_delete_form.html.twig') }}
 
     <table class="table">
         <tbody>
-        <tr>
-            <th>Username</th>
-            <td>{{ user.username }}</td>
-        </tr>
         {% if is_granted('ROLE_ADMIN') %}
+            <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
             <tr>
                 <th>Roles</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
@@ -25,63 +30,127 @@
             <th>Email</th>
             <td>{{ user.email }}</td>
         </tr>
+        <tr>
+            <th>Progress</th>
+            <td>{{ user.progress }}</td>
+        </tr>
         </tbody>
     </table>
 
-    <h1>Checklist</h1>
+    {% if user.progress=='Application' %}
+    <h2 class="d-inline">Application</h2>
 
-    {% for checklist in user.checklists %}
-        <a class="btn btn-primary" href="{{ path('checklist_edit', {'id': checklist.id}) }}">Update Checklist</a>
+    {% for application in user.applications %}
+        {% if app.user.username == user.username %}
+            <a class="d-inline float-right btn btn-primary"
+               href="{{ path('application_edit', {'id': application.id}) }}">Update
+                Application</a>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="d-inline float-right btn btn-primary"
+               href="{{ path('application_approve', {'id': application.id}) }}">Approve App</a>
+        {% endif %}
         <table class="table">
-            <tr>
-                <th>Pre_assess</th>
-                <td>{{ checklist.preAssess ? checklist.preAssess|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Orientation</th>
-                <td>{{ checklist.orientation ? checklist.orientation|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Appliedtograd</th>
-                <td>{{ checklist.appliedtograd }}</td>
-            </tr>
-            <tr>
-                <th>Seminar</th>
-                <td>{% if checklist.seminar %}{{ checklist.seminar.name }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Sphere 1</th>
-                <td>{% if checklist.sphere1 %}{{ checklist.sphere1.name }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Sphere 2</th>
-                <td>{% if checklist.sphere2 %}{{ checklist.sphere2.name }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Sphere 3</th>
-                <td>{% if checklist.sphere3 %}{{ checklist.sphere3.name }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Capstone</th>
-                <td>{% if checklist.capstone %}{{ checklist.capstone.name }}{% endif %}</td>
-            </tr>
             <tbody>
             <tr>
-                <th>Presentation</th>
-                <td>{{ checklist.presentation }}</td>
+                <th>Uga Id</th>
+                <td>{{ application.ugaid }}</td>
             </tr>
             <tr>
-                <th>Athena</th>
-                <td>{{ checklist.athena ? checklist.athena|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Level</th>
+                <td>{{ application.level }}</td>
             </tr>
             <tr>
-                <th>Post_assess</th>
-                <td>{{ checklist.postAssess ? checklist.postAssess|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Interests</th>
+                <td>{{ application.interest }}</td>
+            </tr>
+            <tr>
+                <th>Experience</th>
+                <td>{{ application.experience }}</td>
+            </tr>
+            <tr>
+                <th>Goals</th>
+                <td>{{ application.goals }}</td>
+            </tr>
+            <tr>
+                <th>Application Status</th>
+                <td>{{ application.status }}</td>
             </tr>
             </tbody>
         </table>
     {% else %}
-        <a class="btn btn-primary" href="{{ path('checklist_new') }}">Start Checklist</a>
+        {% if app.user.username == user.username %}
+            <div class="alert alert-info">Welcome to the Sustainability Certificate.  Please fill out an application to get started.
+            We will review it and let you know when you have been accepted to the program.</div>
+            <a class="d-inline float-right btn btn-primary" href="{{ path('application_new') }}">Start Application</a>
+        {% endif %}
     {% endfor %}
+    {% endif %}
+
+    {% if user.progress=='Checklist' %}
+        <h2 class="d-inline">Checklist</h2>
+
+        {% for checklist in user.checklists %}
+            {% if app.user.username == user.username %}
+                <a class="d-inline float-right btn btn-primary"
+                   href="{{ path('checklist_edit', {'id': checklist.id}) }}">Update
+                    Checklist</a>
+            {% endif %}
+            <table class="table">
+                <tr>
+                    <th>Pre_assess</th>
+                    <td>{{ checklist.preAssess ? checklist.preAssess|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Orientation</th>
+                    <td>{{ checklist.orientation ? checklist.orientation|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Appliedtograd</th>
+                    <td>{{ checklist.appliedtograd }}</td>
+                </tr>
+                <tr>
+                    <th>Seminar</th>
+                    <td>{% if checklist.seminar %}{{ checklist.seminar.name }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Sphere 1</th>
+                    <td>{% if checklist.sphere1 %}{{ checklist.sphere1.name }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Sphere 2</th>
+                    <td>{% if checklist.sphere2 %}{{ checklist.sphere2.name }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Sphere 3</th>
+                    <td>{% if checklist.sphere3 %}{{ checklist.sphere3.name }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Capstone</th>
+                    <td>{% if checklist.capstone %}{{ checklist.capstone.name }}{% endif %}</td>
+                </tr>
+                <tbody>
+                <tr>
+                    <th>Presentation</th>
+                    <td>{{ checklist.presentation }}</td>
+                </tr>
+                <tr>
+                    <th>Athena</th>
+                    <td>{{ checklist.athena ? checklist.athena|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Post_assess</th>
+                    <td>{{ checklist.postAssess ? checklist.postAssess|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        {% else %}
+            {% if app.user.username == user.username %}
+                <div class="alert alert-info">Congrats.  Your application has been approved.  Please start your checklist now.</div>
+                <a class="d-inline float-right btn btn-primary" href="{{ path('checklist_new') }}">Start Checklist</a>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
 
 {% endblock %}

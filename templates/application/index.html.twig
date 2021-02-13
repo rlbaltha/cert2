@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Applications{% endblock %}
+
+{% block body %}
+    <h1>Applications</h1>
+
+    <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Ready for Review'}) }}">Ready for Review</a>
+    <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Still Editing'}) }}">Still Editing</a>
+    <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Approved'}) }}">Approved</a>
+    <a class="btn btn-primary d-inline" href="{{ path('application_index') }}">All</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Status</th>
+                <th>Last Modified</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for application in applications %}
+            <tr>
+                <td><a href="{{ path('user_show', {'id': application.user.id}) }}">{{ application.user.lastname }}, {{ application.user.firstname }}</a></td>
+                <td>{{ application.status }}</td>
+                <td>{{ application.updated ? application.updated|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -40,8 +40,10 @@ class ChecklistController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $checklist->setUser($user);
+            $user->setProgress('Checklist Created');
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($checklist);
+            $entityManager->persist($user);
             $entityManager->flush();
 
             return $this->redirectToRoute('user_show', ['id' => $checklist->getUser()->getId()]);

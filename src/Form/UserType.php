@@ -18,6 +18,7 @@ class UserType extends AbstractType
                 'choices'  => [
                     'ROLE_USER' => 'ROLE_USER',
                     'ROLE_ADMIN' => 'ROLE_ADMIN',
+                    'ROLE_ALLOWED_TO_SWITCH' => 'ROLE_ALLOWED_TO_SWITCH',
                 ],
                 'expanded' => true,
                 'multiple' => true,

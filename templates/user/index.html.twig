@@ -5,28 +5,18 @@
 {% block body %}
     <h1>Students</h1>
 
-    <a class="btn btn-primary" href="{{ path('user_new') }}">Create new</a>
-
     <table class="table">
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Username</th>
-                <th>Roles</th>
                 <th>Email</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
             <tr>
                 <td><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.firstName }} {{ user.lastName }}</a></td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.email }}</td>
-                <td>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-                </td>
             </tr>
         {% else %}
             <tr>

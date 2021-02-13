@@ -49,7 +49,19 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
+     * @Route("/profile", name="profile", methods={"GET"})
+     */
+    public function profile(): Response
+    {
+        $username = $this->getUser()->getUsername();
+        $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/show", name="user_show", methods={"GET"})
      */
     public function show(User $user): Response
     {
@@ -57,6 +69,7 @@ class UserController extends AbstractController
             'user' => $user,
         ]);
     }
+
 
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
@@ -69,7 +82,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('profile');
         }
 
         return $this->render('user/edit.html.twig', [
@@ -79,7 +92,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="user_delete", methods={"DELETE"})
      */
     public function delete(Request $request, User $user): Response
     {
