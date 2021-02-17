@@ -26,6 +26,16 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/{progress}/find", name="user_find", methods={"GET"})
+     */
+    public function find(UserRepository $userRepository, string $progress): Response
+    {
+        return $this->render('user/index.html.twig', [
+            'users' => $userRepository->findBy(['progress'=>$progress]),
+        ]);
+    }
+
+    /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Year index{% endblock %}
+
+{% block body %}
+    <h1>Year index</h1>
+
+    <a class="btn btn-primary" href="{{ path('year_new') }}">Create new</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Display</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for year in years %}
+            <tr>
+                <td>{{ year.year }}</td>
+                <td>{{ year.display }}</td>
+                <td>
+                    <a href="{{ path('year_edit', {'id': year.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

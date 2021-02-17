@@ -5,6 +5,10 @@
 {% block body %}
     <h1>Students</h1>
 
+    <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Checklist'}) }}">Checklist</a>
+    <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Graduating'}) }}">Graduating</a>
+    <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Alumni'}) }}">Alumni</a>
+
     <table class="table">
         <thead>
             <tr>

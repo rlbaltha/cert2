@@ -2,40 +2,33 @@
 
 namespace App\Form;
 
-use App\Entity\User;
+use App\Entity\Year;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class YearType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
-            ->add('roles', ChoiceType::class, [
+            ->add('year')
+            ->add('display', ChoiceType::class, [
                 'choices'  => [
-                    'ROLE_USER' => 'ROLE_USER',
-                    'ROLE_ADMIN' => 'ROLE_ADMIN',
-                    'ROLE_ALLOWED_TO_SWITCH' => 'ROLE_ALLOWED_TO_SWITCH',
+                    'Current' => 'Current',
+                    'Archive' => 'Archive',
                 ],
                 'expanded' => true,
-                'multiple' => true,
+                'multiple' => false,
             ])
-            ->add('email')
-            ->add('firstName')
-            ->add('lastName')
-            ->add('altemail')
-            ->add('gradterm')
-            ->add('gradyear')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Year::class,
         ]);
     }
 }

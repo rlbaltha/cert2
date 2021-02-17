@@ -67,6 +67,21 @@ class User implements UserInterface
      */
     private $progress='Application';
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $altemail;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $gradyear;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $gradterm;
+
     public function __construct()
     {
         $this->checklists = new ArrayCollection();
@@ -253,6 +268,42 @@ class User implements UserInterface
     public function setProgress(?string $progress): self
     {
         $this->progress = $progress;
+
+        return $this;
+    }
+
+    public function getAltemail(): ?string
+    {
+        return $this->altemail;
+    }
+
+    public function setAltemail(?string $altemail): self
+    {
+        $this->altemail = $altemail;
+
+        return $this;
+    }
+
+    public function getGradyear(): ?string
+    {
+        return $this->gradyear;
+    }
+
+    public function setGradyear(?string $gradyear): self
+    {
+        $this->gradyear = $gradyear;
+
+        return $this;
+    }
+
+    public function getGradterm(): ?string
+    {
+        return $this->gradterm;
+    }
+
+    public function setGradterm(?string $gradterm): self
+    {
+        $this->gradterm = $gradterm;
 
         return $this;
     }

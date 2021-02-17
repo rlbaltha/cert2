@@ -35,34 +35,53 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('profile') }}">Login</a>
-            </li>
             {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('user_index') }}">Students</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('application_index') }}">Applications</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Admin
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ path('user_index') }}">Students</a>
-                        <a class="dropdown-item" href="{{ path('application_index') }}">Applications</a>
                         <a class="dropdown-item" href="{{ path('school_index') }}">Schools</a>
                         <a class="dropdown-item" href="{{ path('course_index') }}">Courses</a>
+                        <a class="dropdown-item" href="{{ path('year_index') }}">Years</a>
                         <div class="dropdown-divider"></div>
                     </div>
                 </li>
             {% endif %}
-            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+        </ul>
+        <ul class="navbar-nav justify-content-end">
+            {% if app.user %}
+                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('user_index', {'_switch_user': '_exit'}) }}">(Exit login as {{ app.user.username }})</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('user_index', {'_switch_user': '_exit'}) }}">Exit Login As</a>
+                    <div class="navbar-text">
+                        You are logged in as {{ app.user.username }}
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                </li>
+
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('profile') }}">Login</a>
                 </li>
             {% endif %}
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+{#        <form class="form-inline my-2 my-lg-0">#}
+{#            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
+{#            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
+{#        </form>#}
     </div>
 </nav>
 <div class="container">
