@@ -2,6 +2,16 @@
 
 {% block title %}Student index{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        th {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
     <h1>Students</h1>
 
@@ -11,24 +21,49 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-            </tr>
+        <tr>
+            <th>Name<i class="fa fa-fw fa-sort"></i></th>
+            <th>Email<i class="fa fa-fw fa-sort"></i></th>
+            <th>Graduation<i class="fa fa-fw fa-sort"></i></th>
+            <th>Progress<i class="fa fa-fw fa-sort"></i></th>
+        </tr>
         </thead>
         <tbody>
         {% for user in users %}
             <tr>
                 <td><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.firstName }} {{ user.lastName }}</a></td>
-                <td>{{ user.email }}</td>
+                <td>{{ user.email }} {{ user.altemail }}</td>
+                <td>{{ user.gradterm }} {{ user.gradyear ? user.gradyear.year : '' }}</td>
+                <td>{{ user.progress }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
 
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+    {# Simple table sort #}
+    <script>
+        const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+
+        const comparer = (idx, asc) => (a, b) => ((v1, v2) =>
+                v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+        )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
+
+        // do the work...
+        document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+            const table = th.closest('table');
+            const tbody = table.querySelector('tbody');
+            Array.from(tbody.querySelectorAll('tr'))
+                .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+                .forEach(tr => tbody.appendChild(tr));
+        })));
+    </script>
 {% endblock %}

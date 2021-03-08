@@ -72,15 +72,16 @@ class User implements UserInterface
      */
     private $altemail;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $gradyear;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $gradterm;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Year::class, inversedBy="users")
+     */
+    private $gradyear;
 
     public function __construct()
     {
@@ -283,18 +284,7 @@ class User implements UserInterface
 
         return $this;
     }
-
-    public function getGradyear(): ?string
-    {
-        return $this->gradyear;
-    }
-
-    public function setGradyear(?string $gradyear): self
-    {
-        $this->gradyear = $gradyear;
-
-        return $this;
-    }
+    
 
     public function getGradterm(): ?string
     {
@@ -304,6 +294,18 @@ class User implements UserInterface
     public function setGradterm(?string $gradterm): self
     {
         $this->gradterm = $gradterm;
+
+        return $this;
+    }
+
+    public function getGradyear(): ?Year
+    {
+        return $this->gradyear;
+    }
+
+    public function setGradyear(?Year $gradyear): self
+    {
+        $this->gradyear = $gradyear;
 
         return $this;
     }
