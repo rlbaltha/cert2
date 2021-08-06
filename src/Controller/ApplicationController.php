@@ -22,6 +22,7 @@ class ApplicationController extends AbstractController
     {
         return $this->render('application/index.html.twig', [
             'applications' => $applicationRepository->findAll(),
+            'status' => 'All'
         ]);
     }
 
@@ -31,9 +32,19 @@ class ApplicationController extends AbstractController
      */
     public function find(ApplicationRepository $applicationRepository, string $status): Response
     {
-        return $this->render('application/index.html.twig', [
-            'applications' => $applicationRepository->findByStatus($status),
-        ]);
+        if ($status == 'All') {
+            return $this->render('application/index.html.twig', [
+                'applications' => $applicationRepository->findAll(),
+                'status' => 'All'
+            ]);
+        }
+        else {
+            return $this->render('application/index.html.twig', [
+                'applications' => $applicationRepository->findByStatus($status),
+                'status' => $status
+            ]);
+        }
+
     }
 
     /**

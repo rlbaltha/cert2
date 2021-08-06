@@ -13,8 +13,8 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Students</h1>
-
+    <h1>Students <span class="text-muted">({{ app.request.get('progress') }})</span></h1>
+    <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Ready for Review'}) }}">Applicants</a>
     <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Checklist'}) }}">Checklist</a>
     <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Graduating'}) }}">Graduating</a>
     <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Alumni'}) }}">Alumni</a>
@@ -33,8 +33,9 @@
             <tr>
                 <td><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.firstName }} {{ user.lastName }}</a></td>
                 <td>{{ user.email }} {{ user.altemail }}</td>
-                <td>{{ user.gradterm }} {{ user.gradyear ? user.gradyear.year : '' }}</td>
+                <td>{{ user.gradyear }} {{ user.gradterm }} </td>
                 <td>{{ user.progress }}</td>
+
             </tr>
         {% else %}
             <tr>

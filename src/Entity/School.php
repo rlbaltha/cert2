@@ -29,6 +29,7 @@ class School
      */
     private $courses;
 
+
     public function __construct()
     {
         $this->courses = new ArrayCollection();
@@ -80,4 +81,5 @@ class School
 
         return $this;
     }
+
 }

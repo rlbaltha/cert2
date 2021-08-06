@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="`user`")
+ * @ORM\Table(name="cert_user")
  */
 class User implements UserInterface
 {
@@ -29,7 +29,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private $roles = ["ROLE_USER"];
 
     /**
      * @var string The hashed password
@@ -43,12 +43,12 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lastName;
 
@@ -79,7 +79,7 @@ class User implements UserInterface
     private $gradterm;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Year::class, inversedBy="users")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $gradyear;
 
@@ -298,12 +298,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getGradyear(): ?Year
+    public function getGradyear(): ?string
     {
         return $this->gradyear;
     }
 
-    public function setGradyear(?Year $gradyear): self
+    public function setGradyear(?string $gradyear): self
     {
         $this->gradyear = $gradyear;
 

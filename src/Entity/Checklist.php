@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ChecklistRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -81,6 +83,51 @@ class Checklist
      * @ORM\ManyToOne(targetEntity=Course::class, inversedBy="capstones")
      */
     private $capstone;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $school;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $program;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $exceptions;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $portfolio;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $capstonedate;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $capstoneterm;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $port_date;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Substitution::class, mappedBy="checklist")
+     */
+    private $substitutions;
+
+    public function __construct()
+    {
+        $this->substitutions = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -240,6 +287,120 @@ class Checklist
     public function setCapstone(?Course $capstone): self
     {
         $this->capstone = $capstone;
+
+        return $this;
+    }
+
+    public function getSchool(): ?string
+    {
+        return $this->school;
+    }
+
+    public function setSchool(?string $school): self
+    {
+        $this->school = $school;
+
+        return $this;
+    }
+
+    public function getProgram(): ?string
+    {
+        return $this->program;
+    }
+
+    public function setProgram(?string $program): self
+    {
+        $this->program = $program;
+
+        return $this;
+    }
+
+    public function getExceptions(): ?string
+    {
+        return $this->exceptions;
+    }
+
+    public function setExceptions(?string $exceptions): self
+    {
+        $this->exceptions = $exceptions;
+
+        return $this;
+    }
+
+    public function getPortfolio(): ?string
+    {
+        return $this->portfolio;
+    }
+
+    public function setPortfolio(?string $portfolio): self
+    {
+        $this->portfolio = $portfolio;
+
+        return $this;
+    }
+
+    public function getCapstonedate(): ?string
+    {
+        return $this->capstonedate;
+    }
+
+    public function setCapstonedate(?string $capstonedate): self
+    {
+        $this->capstonedate = $capstonedate;
+
+        return $this;
+    }
+
+    public function getCapstoneterm(): ?string
+    {
+        return $this->capstoneterm;
+    }
+
+    public function setCapstoneterm(?string $capstoneterm): self
+    {
+        $this->capstoneterm = $capstoneterm;
+
+        return $this;
+    }
+
+    public function getPortDate(): ?\DateTimeInterface
+    {
+        return $this->port_date;
+    }
+
+    public function setPortDate(?\DateTimeInterface $port_date): self
+    {
+        $this->port_date = $port_date;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Substitution[]
+     */
+    public function getSubstitutions(): Collection
+    {
+        return $this->substitutions;
+    }
+
+    public function addSubstitution(Substitution $substitution): self
+    {
+        if (!$this->substitutions->contains($substitution)) {
+            $this->substitutions[] = $substitution;
+            $substitution->setChecklist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubstitution(Substitution $substitution): self
+    {
+        if ($this->substitutions->removeElement($substitution)) {
+            // set the owning side to null (unless already changed)
+            if ($substitution->getChecklist() === $this) {
+                $substitution->setChecklist(null);
+            }
+        }
 
         return $this;
     }

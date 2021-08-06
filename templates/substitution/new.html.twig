@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Substitution{% endblock %}
+
+{% block body %}
+    <h1>Create new Substitution</h1>
+
+    {{ include('substitution/_form.html.twig') }}
+
+    <a href="{{ path('substitution_index') }}">back to list</a>
+{% endblock %}

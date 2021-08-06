@@ -37,7 +37,8 @@ class UserType extends AbstractType
             ->add('altemail', TextType::class, [
                 'label' => 'Alternative Email',
                 'attr' => [
-                    'placeholder' => 'ima@gmail.com']
+                    'placeholder' => 'ima@gmail.com'],
+                'required' => false,
             ])
             ->add('gradterm', ChoiceType::class, [
                 'choices'  => [
@@ -48,13 +49,23 @@ class UserType extends AbstractType
                 'label'  => 'Graduation Term',
                 'required' => false,
             ])
-            ->add('gradyear', EntityType::class, [
-                'class' => Year::class,
-                'choices' => $this->yearRepository->findBy(['display'=>'Current'], ['year' => 'DESC']),
-                'choice_label' => 'year',
-                'choice_value' => 'year',
-                'label'  => 'Graduation Year',
-                'expanded' => false,
+            ->add('gradyear', TextType::class, [
+                'label' => 'Year you expect to graduate',
+                'attr' => [
+                    'placeholder' => '2024'],
+                'required' => false,
+            ])
+            ->add('progress', ChoiceType::class, [
+                'choices'  => [
+                    'Application' => 'Application',
+                    'Checklist' => 'Checklist',
+                    'Graduating' => 'Graduating',
+                    'Alumni' => 'Alumni',
+                    'Admin' => 'Admin',
+                    'Inactive' => 'Inactive',
+                ],
+                'expanded'=> false,
+                'label'  => 'Progress',
                 'required' => false,
             ])
         ;

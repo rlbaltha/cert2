@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Major{% endblock %}
+
+{% block body %}
+    <h1>Edit Major</h1>
+
+    {{ include('major/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('major_index') }}">back to list</a>
+
+    {{ include('major/_delete_form.html.twig') }}
+{% endblock %}

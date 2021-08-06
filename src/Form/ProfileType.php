@@ -25,7 +25,8 @@ class ProfileType extends AbstractType
             ->add('altemail', TextType::class, [
                 'label' => 'Alternative Email',
                 'attr' => [
-                    'placeholder' => 'ima@gmail.com']
+                    'placeholder' => 'ima@gmail.com'],
+                'required' => false,
             ])
             ->add('gradterm', ChoiceType::class, [
                 'choices'  => [

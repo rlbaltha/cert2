@@ -13,12 +13,12 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Applications</h1>
+    <h1>Applicants <span class="text-muted">({{ status }})</span> </h1>
 
     <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Ready for Review'}) }}">Ready for Review</a>
     <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Still Editing'}) }}">Still Editing</a>
     <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Approved'}) }}">Approved</a>
-    <a class="btn btn-primary d-inline" href="{{ path('application_index') }}">All</a>
+    <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Checklist'}) }}">Return to Main Student List</a>
     <table class="table">
         <thead>
             <tr>
