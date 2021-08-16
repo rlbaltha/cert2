@@ -26,6 +26,8 @@ security:
 #                # where to redirect after logout
 #                # target: app_any_route
         main:
+            anonymous: lazy
+            provider: app_user_provider
             # We use Guard !
             guard:
                 authenticators:
