@@ -10,13 +10,13 @@ cas_guard:
     route:
 
         # Name of your home route.
-        homepage: /
+        homepage: home
 
         # Name of your login route.
-        login: login
+        login: user/profile
 
         # Name of the route where user is redirected after successful logout.
-        logout: logout
+        logout: home
 
     # Version of the CAS Server.
     version:              '2.0'
