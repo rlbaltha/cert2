@@ -12,17 +12,11 @@ security:
                 property: username
     firewalls:
         main:
-            anonymous: lazy
-            provider: app_user_provider
-            # We use Guard !
+            anonymous: ~
             guard:
-                authenticators:
-                  # ADD the cas authenticator declared in this bundle
-                  - phpcasguard.cas_authenticator
-            # The logout path
-            logout:
-                # This route will be never called because of listener. It will catch it and redirect user.
-                path: /logout
+#              provider: cas
+              authenticators:
+                - cas.guardauthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
