@@ -11,19 +11,30 @@ security:
                 class: App\Entity\User
                 property: username
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+#       DEV AUTH
+#        dev:
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
+#        main:
+#            anonymous: lazy
+#            provider: app_user_provider
+#            guard:
+#                authenticators:
+#                    - App\Security\UserAuthenticator
+#            logout:
+#                path: app_logout
+#                # where to redirect after logout
+#                # target: app_any_route
         main:
-            anonymous: lazy
-            provider: app_user_provider
+            # We use Guard !
             guard:
                 authenticators:
-                    - App\Security\UserAuthenticator
+                  # ADD the cas authenticator declared in this bundle
+                  - phpcasguard.cas_authenticator
+            # The logout path
             logout:
-                path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
+                # This route will be never called because of listener. It will catch it and redirect user.
+                path: /logout
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
