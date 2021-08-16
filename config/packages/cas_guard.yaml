@@ -1,10 +1,10 @@
 cas_guard:
 
      # Enter the hostname of the CAS server.
-    hostname:             'stage.sso.uga.edu'
+    hostname:             'sso.stage.uga.edu'
 
     # REQUEST_PATH of the CAS server.
-    url:                  cas/login # Example: cas/login
+    url:                  cas/login 
 
     # Route node.
     route:
