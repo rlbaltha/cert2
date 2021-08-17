@@ -3,26 +3,12 @@ cas:
     protocol:
         login:
             path: /login
-            allowed_parameters:
-                - service
-                - renew
-                - gateway
             default_parameters:
                 service: https://beta.sustain.uga.edu/user/profile
         serviceValidate:
             path: /serviceValidate
-            allowed_parameters:
-                - service
-                - pgtUrl
-                - renew
-                - format
-            default_parameters:
-                format: JSON
-                #pgtUrl: cas_bundle_proxy_callback
         logout:
             path: /logout
-            allowed_parameters:
-                - service
             default_parameters:
                 service: https://beta.sustain.uga.edu/
 #        proxy:
