@@ -8,7 +8,7 @@ cas:
                 - renew
                 - gateway
             default_parameters:
-                service: https://beta.sustain.uga.edu/home
+                service: https://beta.sustain.uga.edu/user/profile
         serviceValidate:
             path: /serviceValidate
             allowed_parameters:
@@ -24,7 +24,7 @@ cas:
             allowed_parameters:
                 - service
             default_parameters:
-                service: https://beta.sustain.uga.edu/home
+                service: https://beta.sustain.uga.edu/
 #        proxy:
 #            path: /proxy
 #            allowed_parameters:
