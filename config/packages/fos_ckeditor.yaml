@@ -1,0 +1,16 @@
+# Read the documentation: https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html
+fos_ck_editor:
+    configs:
+        editor_simple:
+            toolbar: "toolbar_simple"
+            removePlugins: "elementspath,contextmenu,liststyle,tabletools"
+            allowedContent: 'p h2 h3 h4 img{text-align,margin-left}(*); a[!href,target]{*}(*); table th tr td strong em; ol ul li span(*); img[*]{*}; iframe{*}[*];'
+            disableNativeSpellChecker: false
+            height: 150
+    toolbars:
+        configs:
+            toolbar_simple: [ ['Bold','Italic','Underline','Strike'],['Link','Unlink'],['NumberedList','BulletedList']]
+
+twig:
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'

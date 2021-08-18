@@ -4,20 +4,16 @@
 
 {% block body %}
     <h1>Substitution</h1>
-
+    <a class="btn btn-primary" href="{{ path('substitution_edit', {'id': substitution.id}) }}">Edit</a>
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ substitution.id }}</td>
-            </tr>
             <tr>
                 <th>Requirement</th>
                 <td>{{ substitution.requirement }}</td>
             </tr>
             <tr>
                 <th>Description</th>
-                <td>{{ substitution.description }}</td>
+                <td>{{ substitution.description|raw }}</td>
             </tr>
             <tr>
                 <th>Status</th>
@@ -26,9 +22,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('substitution_index') }}">back to list</a>
 
-    <a href="{{ path('substitution_edit', {'id': substitution.id}) }}">edit</a>
-
-    {{ include('substitution/_delete_form.html.twig') }}
 {% endblock %}

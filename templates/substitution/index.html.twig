@@ -3,29 +3,26 @@
 {% block title %}Substitution index{% endblock %}
 
 {% block body %}
-    <h1>Substitution index</h1>
-
+    <h1>Substitutions</h1>
+    <a class="btn btn-primary d-inline" href="{{ path('substitution_find', {'status': 'Created'}) }}">Created</a>
+    <a class="btn btn-primary d-inline" href="{{ path('substitution_find', {'status': 'Approved'}) }}">Approved</a>
+    <a class="btn btn-primary d-inline" href="{{ path('substitution_find', {'status': 'Denied'}) }}">Denied</a>
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Student</th>
                 <th>Requirement</th>
                 <th>Description</th>
                 <th>Status</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for substitution in substitutions %}
             <tr>
-                <td>{{ substitution.id }}</td>
+                <td><a href="{{ path('substitution_show', {'id': substitution.id}) }}">{{ substitution.checklist.user.firstName }} {{ substitution.checklist.user.lastName }}</a></td>
                 <td>{{ substitution.requirement }}</td>
-                <td>{{ substitution.description }}</td>
+                <td>{{ substitution.description|raw }}</td>
                 <td>{{ substitution.status }}</td>
-                <td>
-                    <a href="{{ path('substitution_show', {'id': substitution.id}) }}">show</a>
-                    <a href="{{ path('substitution_edit', {'id': substitution.id}) }}">edit</a>
-                </td>
             </tr>
         {% else %}
             <tr>
@@ -35,5 +32,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('substitution_new') }}">Create new</a>
 {% endblock %}

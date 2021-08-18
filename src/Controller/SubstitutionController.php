@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Substitution;
 use App\Form\SubstitutionType;
 use App\Repository\SubstitutionRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,15 @@ class SubstitutionController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{status}/find", name="substitution_find", methods={"GET"})
+     */
+    public function find(SubstitutionRepository $substitutionRepositoryy, string $status): Response
+    {
+        return $this->render('substitution/index.html.twig', [
+            'substitutions' => $substitutionRepositoryy->findBy(['status'=>$status]),
+        ]);
+    }
     /**
      * @Route("/new", name="substitution_new", methods={"GET","POST"})
      */

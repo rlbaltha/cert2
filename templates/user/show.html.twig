@@ -86,21 +86,23 @@
                 </tbody>
             </table>
         {% else %}
-            {% if app.user.username == user.username %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="alert alert-warning">Admin Note: No Application has been started  New users will see the following:</div>
+            {% endif %}
                 <div class="alert alert-info">Welcome to the Sustainability Certificate. Please fill out an application
                     to get started.
                     We will review it and let you know when you have been accepted to the program.
                 </div>
                 <a class="d-inline float-right btn btn-primary" href="{{ path('application_new') }}">Start
                     Application</a>
-            {% endif %}
         {% endfor %}
     {% endif %}
 
-    {% if user.progress=='Checklist' %}
-        <h2 class="d-inline">Checklist</h2>
+    {% if user.checklists %}
+
 
         {% for checklist in user.checklists %}
+            <h2 class="d-inline">Checklist</h2>
             {% if app.user.username == user.username %}
                 <a class="d-inline float-right btn btn-primary"
                    href="{{ path('checklist_edit', {'id': checklist.id}) }}">Update
@@ -154,8 +156,32 @@
                 </tr>
                 </tbody>
             </table>
+
+            <h3 class="d-inline">Substitutions</h3>
+            <table class="table">
+
+                <tbody>
+                {% for substitution in checklist.substitutions %}
+                    <tr>
+                        <th>Requirement</th>
+                        <td>{{ substitution.requirement }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ substitution.description|raw }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ substitution.status }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         {% else %}
-            {% if app.user.username == user.username %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="alert alert-warning">Admin Note: No Checklist has been started:</div>
+            {% endif %}
+            {% if app.user.username == user.username and user.progress == 'Checklist'%}
                 <div class="alert alert-info">Congrats. Your application has been approved. Please start your checklist
                     now.
                 </div>

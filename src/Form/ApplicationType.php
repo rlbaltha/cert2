@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Application;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,9 +27,18 @@ class ApplicationType extends AbstractType
                 ],
                 'expanded'=> true,
             ])
-            ->add('interest')
-            ->add('experience')
-            ->add('goals')
+            ->add('interest', CKEditorType::class, [
+                'config_name' => 'editor_simple',
+                'label' => 'What is your interest in Sustainability',
+            ])
+            ->add('experience', CKEditorType::class, [
+                'config_name' => 'editor_simple',
+                'label' => 'What is your experience with Sustainability?',
+            ])
+            ->add('goals', CKEditorType::class, [
+                'config_name' => 'editor_simple',
+                'label' => 'What are your goals?',
+            ])
             ->add('status', ChoiceType::class, [
                 'choices'  => [
                     'Still Editing' => 'Still Editing',
