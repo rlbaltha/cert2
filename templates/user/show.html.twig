@@ -163,15 +163,8 @@
                 <tbody>
                 {% for substitution in checklist.substitutions %}
                     <tr>
-                        <th>Requirement</th>
                         <td>{{ substitution.requirement }}</td>
-                    </tr>
-                    <tr>
-                        <th>Description</th>
                         <td>{{ substitution.description|raw }}</td>
-                    </tr>
-                    <tr>
-                        <th>Status</th>
                         <td>{{ substitution.status }}</td>
                     </tr>
                 {% endfor %}
