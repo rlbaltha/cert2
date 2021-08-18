@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Student index{% endblock %}
+{% block title %}Student index - {{ parent() }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -14,8 +14,7 @@
 
 {% block body %}
     <h1>Students <span class="text-muted">({% if app.request.get('progress') %}{{ app.request.get('progress') }}{% else %} {{ app.request.get('year') }} {{ app.request.get('term') }}{% endif %} -- {{ users|length }})</span></h1>
-    <a class="btn btn-primary d-inline"
-       href="{{ path('application_find', {'status': 'Ready for Review'}) }}">Applicants</a>
+
     <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Checklist'}) }}">Checklist</a>
     <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Graduating'}) }}">Graduating</a>
     <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Alumni'}) }}">Alumni</a>

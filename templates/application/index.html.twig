@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Applications{% endblock %}
+{% block title %}Applications - {{ parent() }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -18,7 +18,6 @@
     <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Ready for Review'}) }}">Ready for Review</a>
     <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Still Editing'}) }}">Still Editing</a>
     <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Approved'}) }}">Approved</a>
-    <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Checklist'}) }}">Return to Main Student List</a>
     <table class="table">
         <thead>
             <tr>
