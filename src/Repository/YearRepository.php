@@ -20,15 +20,15 @@ class YearRepository extends ServiceEntityRepository
     }
 
 
-    /*
-    public function findOneBySomeField($value): ?Year
+    /**
+     * @return Year[] Returns an array of Year objects
+     */
+    public function findAllDesc()
     {
         return $this->createQueryBuilder('y')
-            ->andWhere('y.exampleField = :val')
-            ->setParameter('val', $value)
+            ->orderBy()
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult()
+            ;
     }
-    */
 }

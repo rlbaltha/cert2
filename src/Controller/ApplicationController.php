@@ -20,9 +20,11 @@ class ApplicationController extends AbstractController
      */
     public function index(ApplicationRepository $applicationRepository): Response
     {
+        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
         return $this->render('application/index.html.twig', [
             'applications' => $applicationRepository->findAll(),
-            'status' => 'All'
+            'status' => 'All',
+            'years' => $years
         ]);
     }
 
@@ -32,16 +34,19 @@ class ApplicationController extends AbstractController
      */
     public function find(ApplicationRepository $applicationRepository, string $status): Response
     {
+        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
         if ($status == 'All') {
             return $this->render('application/index.html.twig', [
                 'applications' => $applicationRepository->findAll(),
-                'status' => 'All'
+                'status' => 'All',
+                'years' => $years
             ]);
         }
         else {
             return $this->render('application/index.html.twig', [
                 'applications' => $applicationRepository->findByStatus($status),
-                'status' => $status
+                'status' => $status,
+                'years' => $years
             ]);
         }
 

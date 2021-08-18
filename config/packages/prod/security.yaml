@@ -3,20 +3,17 @@ security:
         App\Entity\User:
             algorithm: auto
 
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: username
+        cas:
+          id: App\Service\CertUserProvider
+
     firewalls:
         main:
             anonymous: ~
+            logout: ~
             guard:
-#              provider: cas
-              authenticators:
-                - cas.guardauthenticator
+                authenticators:
+                    - prayno.cas_authenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

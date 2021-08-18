@@ -21,8 +21,10 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
+        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
+            'years' => $years
         ]);
     }
 
@@ -31,8 +33,22 @@ class UserController extends AbstractController
      */
     public function find(UserRepository $userRepository, string $progress): Response
     {
+        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findBy(['progress'=>$progress]),
+            'years' => $years
+        ]);
+    }
+
+    /**
+     * @Route("/{term}/{year}/findByDate", name="user_findbydate", methods={"GET"})
+     */
+    public function findByDate(UserRepository $userRepository, string $year, string $term): Response
+    {
+        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
+        return $this->render('user/index.html.twig', [
+            'users' => $userRepository->findByDate($year, $term),
+            'years' => $years
         ]);
     }
 

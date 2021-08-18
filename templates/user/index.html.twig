@@ -13,11 +13,28 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Students <span class="text-muted">({{ app.request.get('progress') }})</span></h1>
-    <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Ready for Review'}) }}">Applicants</a>
+    <h1>Students <span class="text-muted">({% if app.request.get('progress') %}{{ app.request.get('progress') }}{% else %} {{ app.request.get('year') }} {{ app.request.get('term') }}{% endif %} -- {{ users|length }})</span></h1>
+    <a class="btn btn-primary d-inline"
+       href="{{ path('application_find', {'status': 'Ready for Review'}) }}">Applicants</a>
     <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Checklist'}) }}">Checklist</a>
     <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Graduating'}) }}">Graduating</a>
     <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Alumni'}) }}">Alumni</a>
+        <a class="btn btn-primary d-inline dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            By Graduation Date
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {% for year in years %}
+                <a class="dropdown-item"
+                   href="{{ path('user_findbydate', {'year': year.year, 'term': 'Fall'}) }}">{{ year.year }} Fall </a>
+                <a class="dropdown-item"
+                   href="{{ path('user_findbydate', {'year': year.year, 'term': 'Spring'}) }}">{{ year.year }} Spring </a>
+                <a class="dropdown-item"
+                   href="{{ path('user_findbydate', {'year': year.year, 'term': 'Summer'}) }}">{{ year.year }} Summer </a>
+            {% endfor %}
+
+        </div>
 
     <table class="table">
         <thead>
@@ -49,7 +66,7 @@
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
+    {{ parent() }}
     {# Simple table sort #}
     <script>
         const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
