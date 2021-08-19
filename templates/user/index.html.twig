@@ -55,6 +55,7 @@
             <th>Name<i class="fa fa-fw fa-sort"></i></th>
             <th>Email<i class="fa fa-fw fa-sort"></i></th>
             <th>Graduation<i class="fa fa-fw fa-sort"></i></th>
+            <th>Progress<i class="fa fa-fw fa-sort"></i></th>
         </tr>
         </thead>
         <tbody id="users">
@@ -63,6 +64,7 @@
                 <td><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.firstName }} {{ user.lastName }}</a></td>
                 <td>{{ user.email }} {{ user.altemail }}</td>
                 <td>{{ user.gradyear }} {{ user.gradterm }} </td>
+                <td>{{ user.progress }}</td>
             </tr>
         {% else %}
             <tr>
