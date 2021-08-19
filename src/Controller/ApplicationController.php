@@ -20,6 +20,7 @@ class ApplicationController extends AbstractController
      */
     public function index(ApplicationRepository $applicationRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
         return $this->render('application/index.html.twig', [
             'applications' => $applicationRepository->findAll(),
@@ -34,6 +35,7 @@ class ApplicationController extends AbstractController
      */
     public function find(ApplicationRepository $applicationRepository, string $status): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
         if ($status == 'All') {
             return $this->render('application/index.html.twig', [
@@ -57,6 +59,7 @@ class ApplicationController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $username = $this->getUser()->getUsername();
         $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
         $application = new Application();
@@ -85,6 +88,7 @@ class ApplicationController extends AbstractController
      */
     public function approve(Application $application): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $username = $application->getUser()->getUsername();
         $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
         $user->setProgress('Checklist');
@@ -121,6 +125,7 @@ class ApplicationController extends AbstractController
      */
     public function delete(Request $request, Application $application): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$application->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($application);

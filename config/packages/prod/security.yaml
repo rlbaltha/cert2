@@ -35,3 +35,4 @@ security:
          - { path: ^/application, roles: ROLE_USER }
          - { path: ^/checklist, roles: ROLE_USER }
          - { path: ^/substitution, roles: ROLE_USER }
+         - { path: ^/major, roles: ROLE_ADMIN }

@@ -21,6 +21,7 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
@@ -33,6 +34,7 @@ class UserController extends AbstractController
      */
     public function find(UserRepository $userRepository, string $progress): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findBy(['progress'=>$progress],['gradyear'=>'DESC']),
@@ -45,6 +47,7 @@ class UserController extends AbstractController
      */
     public function findByDate(UserRepository $userRepository, string $year, string $term): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findByDate($year, $term),
@@ -57,6 +60,7 @@ class UserController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -107,6 +111,7 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -147,6 +152,7 @@ class UserController extends AbstractController
      */
     public function delete(Request $request, User $user): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);

@@ -9,17 +9,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
+
+
 
 /**
  * @Route("/checklist")
  */
 class ChecklistController extends AbstractController
 {
+
+    private $security;
+
+    public function __construct(Security $security) {
+        $this->security = $security;
+    }
+
     /**
      * @Route("/", name="checklist_index", methods={"GET"})
      */
     public function index(ChecklistRepository $checklistRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('checklist/index.html.twig', [
             'checklists' => $checklistRepository->findAll(),
         ]);
@@ -76,7 +87,13 @@ class ChecklistController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_show', ['id' => $checklist->getUser()->getId()]);
+            if ($this->security->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('user_show', ['id' => $checklist->getUser()->getId()]);
+            }
+            else {
+                return $this->redirectToRoute('profile');
+            }
+
         }
 
         return $this->render('checklist/edit.html.twig', [
@@ -90,6 +107,7 @@ class ChecklistController extends AbstractController
      */
     public function delete(Request $request, Checklist $checklist): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$checklist->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($checklist);
