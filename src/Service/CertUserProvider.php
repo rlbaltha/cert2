@@ -29,7 +29,7 @@ class CertUserProvider extends CasUserProvider implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         if ($username) {
-            $password = random_bytes(10);;
+            $password = random_int(1, 16);
             $length = strlen($username);
             $init = substr($username, 0, 1);
             $user = $this->entityManager->getRepository('App:User')->findOneByUsername($username);
