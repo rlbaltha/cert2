@@ -26,7 +26,7 @@ class YearRepository extends ServiceEntityRepository
     public function findAllDesc()
     {
         return $this->createQueryBuilder('y')
-            ->orderBy()
+            ->orderBy('y.year', 'DESC')
             ->getQuery()
             ->getResult()
             ;

@@ -20,7 +20,7 @@ class ApplicationController extends AbstractController
      */
     public function index(ApplicationRepository $applicationRepository): Response
     {
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
+        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
         return $this->render('application/index.html.twig', [
             'applications' => $applicationRepository->findAll(),
             'status' => 'All',

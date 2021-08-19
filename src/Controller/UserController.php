@@ -21,7 +21,7 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
+        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
             'years' => $years
@@ -33,7 +33,7 @@ class UserController extends AbstractController
      */
     public function find(UserRepository $userRepository, string $progress): Response
     {
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
+        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findBy(['progress'=>$progress],['gradyear'=>'DESC']),
             'years' => $years
@@ -45,7 +45,7 @@ class UserController extends AbstractController
      */
     public function findByDate(UserRepository $userRepository, string $year, string $term): Response
     {
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
+        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findByDate($year, $term),
             'years' => $years

@@ -72,10 +72,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->createQueryBuilder('u')
             ->andWhere('u.gradterm = :term')
             ->andWhere('u.gradyear = :year')
-            ->andWhere('u.progress = :progress')
+            ->andWhere('u.progress != :progress')
             ->setParameter('year', $year)
             ->setParameter('term', $term)
-            ->setParameter('progress', 'Checklist')
+            ->setParameter('progress', 'Inactive')
             ->getQuery()
             ->getResult()
             ;
