@@ -35,7 +35,7 @@ class UserController extends AbstractController
     {
         $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findBy(['progress'=>$progress]),
+            'users' => $userRepository->findBy(['progress'=>$progress],['gradyear'=>'DESC']),
             'years' => $years
         ]);
     }

@@ -13,23 +13,35 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Applicants <span class="text-muted">({{ status }})</span> </h1>
+    <h1>Applicants <span class="text-muted">({{ status }})</span></h1>
 
-    <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Ready for Review'}) }}">Ready for Review</a>
-    <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Still Editing'}) }}">Still Editing</a>
-    <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Approved'}) }}">Approved</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm mt-2">
+                <a class="btn btn-primary d-inline"
+                   href="{{ path('application_find', {'status': 'Ready for Review'}) }}">Ready for Review</a>
+                <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Still Editing'}) }}">Still
+                    Editing</a>
+                <a class="btn btn-primary d-inline" href="{{ path('application_find', {'status': 'Approved'}) }}">Approved</a>
+            </div>
+            <div class="col-sm mb-2"><input class="form-control d-inline" id="filter" type="text"
+                                            placeholder="Filter results"></div>
+        </div>
+    </div>
+
     <table class="table">
         <thead>
-            <tr>
-                <th>Student<i class="fa fa-fw fa-sort"></i></th>
-                <th>Status<i class="fa fa-fw fa-sort"></i></th>
-                <th>Last Modified<i class="fa fa-fw fa-sort"></i></th>
-            </tr>
+        <tr>
+            <th>Student<i class="fa fa-fw fa-sort"></i></th>
+            <th>Status<i class="fa fa-fw fa-sort"></i></th>
+            <th>Last Modified<i class="fa fa-fw fa-sort"></i></th>
+        </tr>
         </thead>
-        <tbody>
+        <tbody id="users">
         {% for application in applications %}
             <tr>
-                <td><a href="{{ path('user_show', {'id': application.user.id}) }}">{{ application.user.lastname }}, {{ application.user.firstname }}</a></td>
+                <td><a href="{{ path('user_show', {'id': application.user.id}) }}">{{ application.user.lastname }}
+                        , {{ application.user.firstname }}</a></td>
                 <td>{{ application.status }}</td>
                 <td>{{ application.updated ? application.updated|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
@@ -61,5 +73,16 @@
                 .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
                 .forEach(tr => tbody.appendChild(tr));
         })));
+    </script>
+    {# Simple filter #}
+    <script>
+        $(document).ready(function () {
+            $("#filter").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#users tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
     </script>
 {% endblock %}

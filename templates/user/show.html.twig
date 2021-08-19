@@ -44,70 +44,15 @@
         </tbody>
     </table>
 
-    {% if user.progress=='Application' %}
-        <h2 class="d-inline">Application</h2>
 
-        {% for application in user.applications %}
-            {% if app.user.username == user.username %}
-                <a class="d-inline float-right btn btn-primary"
-                   href="{{ path('application_edit', {'id': application.id}) }}">Update
-                    Application</a>
-            {% endif %}
-            {% if is_granted('ROLE_ADMIN') %}
-                <a class="d-inline float-right btn btn-primary"
-                   href="{{ path('application_approve', {'id': application.id}) }}">Approve App</a>
-            {% endif %}
-            <table class="table">
-                <tbody>
-                <tr>
-                    <th>Uga Id</th>
-                    <td>{{ application.ugaid }}</td>
-                </tr>
-                <tr>
-                    <th>Level</th>
-                    <td>{{ application.level }}</td>
-                </tr>
-                <tr>
-                    <th>Interests</th>
-                    <td>{{ application.interest|raw }}</td>
-                </tr>
-                <tr>
-                    <th>Experience</th>
-                    <td>{{ application.experience|raw }}</td>
-                </tr>
-                <tr>
-                    <th>Goals</th>
-                    <td>{{ application.goals|raw }}</td>
-                </tr>
-                <tr>
-                    <th>Application Status</th>
-                    <td>{{ application.status }}</td>
-                </tr>
-                </tbody>
-            </table>
-        {% else %}
-            {% if is_granted('ROLE_ADMIN') %}
-                <div class="alert alert-warning">Admin Note: No Application has been started  New users will see the following:</div>
-            {% endif %}
-                <div class="alert alert-info">Welcome to the Sustainability Certificate. Please fill out an application
-                    to get started.
-                    We will review it and let you know when you have been accepted to the program.
-                </div>
-                <a class="d-inline float-right btn btn-primary" href="{{ path('application_new') }}">Start
-                    Application</a>
-        {% endfor %}
-    {% endif %}
 
     {% if user.checklists %}
 
-
         {% for checklist in user.checklists %}
             <h2 class="d-inline">Checklist</h2>
-            {% if app.user.username == user.username %}
                 <a class="d-inline float-right btn btn-primary"
                    href="{{ path('checklist_edit', {'id': checklist.id}) }}">Update
                     Checklist</a>
-            {% endif %}
             <table class="table">
                 <tr>
                     <th>Pre-Certificate Survey Completed</th>
@@ -183,5 +128,56 @@
         {% endfor %}
     {% endif %}
 
+    {% if user.progress=='Application' or  is_granted('ROLE_ADMIN')%}
+        <h2 class="d-inline">Application</h2>
+
+        {% for application in user.applications %}
+                <a class="d-inline float-right btn btn-primary"
+                   href="{{ path('application_edit', {'id': application.id}) }}">Update
+                    Application</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="d-inline float-right btn btn-primary"
+                   href="{{ path('application_approve', {'id': application.id}) }}">Approve App</a>
+            {% endif %}
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Uga Id</th>
+                    <td>{{ application.ugaid }}</td>
+                </tr>
+                <tr>
+                    <th>Level</th>
+                    <td>{{ application.level }}</td>
+                </tr>
+                <tr>
+                    <th>Interests</th>
+                    <td>{{ application.interest|raw }}</td>
+                </tr>
+                <tr>
+                    <th>Experience</th>
+                    <td>{{ application.experience|raw }}</td>
+                </tr>
+                <tr>
+                    <th>Goals</th>
+                    <td>{{ application.goals|raw }}</td>
+                </tr>
+                <tr>
+                    <th>Application Status</th>
+                    <td>{{ application.status }}</td>
+                </tr>
+                </tbody>
+            </table>
+        {% else %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="alert alert-warning">Admin Note: No Application has been started  New users will see the following:</div>
+            {% endif %}
+            <div class="alert alert-info">Welcome to the Sustainability Certificate. Please fill out an application
+                to get started.
+                We will review it and let you know when you have been accepted to the program.
+            </div>
+            <a class="d-inline float-right btn btn-primary" href="{{ path('application_new') }}">Start
+                Application</a>
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}
