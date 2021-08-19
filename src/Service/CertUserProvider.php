@@ -29,8 +29,7 @@ class CertUserProvider extends CasUserProvider implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         if ($username) {
-            $password = '...';
-            $salt = "";
+            $password = random_bytes(10);;
             $length = strlen($username);
             $init = substr($username, 0, 1);
             $user = $this->entityManager->getRepository('App:User')->findOneByUsername($username);
@@ -40,6 +39,7 @@ class CertUserProvider extends CasUserProvider implements UserProviderInterface
             }
             $user = New User();
             $user->setUsername($username);
+            $user->setPassword($password);
             $user->setRoles(["ROLE_USER"]);
             $user->setLastname('Please Update');
             $user->setFirstname('Please Update');
