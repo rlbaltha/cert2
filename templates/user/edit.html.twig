@@ -5,6 +5,8 @@
 {% block body %}
     <h1>Profile</h1>
 
+    <div class="alert alert-info">Please complete the form below.</div>
+
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
     {% if is_granted('ROLE_ADMIN') %}
