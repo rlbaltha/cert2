@@ -32,4 +32,4 @@ services:
 
     PRayno\CasAuthBundle\Event\LogoutSuccessHandler:
         arguments:
-            $logoutUrl: "/logout"
+            $logoutUrl: "https://sso.stage.uga.edu/cas/logout"
