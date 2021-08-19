@@ -43,8 +43,6 @@ class CertUserProvider extends CasUserProvider implements UserProviderInterface
             $user->setPassword($password);
             $user->setEmail($email);
             $user->setRoles(["ROLE_USER"]);
-            $user->setLastname('Please Update');
-            $user->setFirstname('Please Update');
             $this->entityManager->persist($user);
             $this->entityManager->flush();
             return $user;

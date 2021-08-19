@@ -82,6 +82,10 @@ class UserController extends AbstractController
     {
         $username = $this->getUser()->getUsername();
         $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+
+        if ($user->getLastName() == null) {
+            return $this->redirectToRoute('user_profile_edit',['id'=>$user->getId()]);
+        }
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
