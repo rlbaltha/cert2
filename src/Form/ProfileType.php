@@ -43,9 +43,7 @@ class ProfileType extends AbstractType
                 'required' => false,
             ])
             ->add('gradyear', TextType::class, [
-                'label' => 'Graduation Year',
-                'attr' => [
-                    'placeholder' => '2021'],
+                'label' => 'Graduation Year e.g. 2022',
                 'required' => false,
             ])
         ;
