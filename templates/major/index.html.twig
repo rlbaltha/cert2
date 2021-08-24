@@ -3,12 +3,11 @@
 {% block title %}Major index{% endblock %}
 
 {% block body %}
-    <h1>Major index</h1>
-
+    <h1>Majors</h1>
+    <a class="btn btn-primary" href="{{ path('major_new') }}">Create new</a>
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>actions</th>
             </tr>
@@ -16,10 +15,9 @@
         <tbody>
         {% for major in majors %}
             <tr>
-                <td>{{ major.id }}</td>
-                <td>{{ major.name }}</td>
+                <td><a href="{{ path('major_show', {'id': major.id}) }}">{{ major.name }}</a></td>
                 <td>
-                    <a href="{{ path('major_show', {'id': major.id}) }}">show</a>
+
                     <a href="{{ path('major_edit', {'id': major.id}) }}">edit</a>
                 </td>
             </tr>
@@ -31,5 +29,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('major_new') }}">Create new</a>
+
 {% endblock %}
