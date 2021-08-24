@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use App\Entity\Year;
 use App\Repository\YearRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -44,6 +45,22 @@ class ProfileType extends AbstractType
             ])
             ->add('gradyear', TextType::class, [
                 'label' => 'Graduation Year e.g. 2022',
+                'required' => false,
+            ])
+            ->add('school1', EntityType::class, array('required' => false,'class' => 'App\Entity\School',
+                'choice_label' => 'name','expanded'=>false,'multiple'=>false,'label'  => 'School', 'attr' => array('class' =>
+                    'form-control'),))
+            ->add('major1', EntityType::class, array('required' => false,'class' => 'App\Entity\Major',
+                'choice_label' => 'name','expanded'=>false,'multiple'=>false,'label'  => 'Major', 'attr' => array('class' =>
+                    'form-control'),))
+            ->add('school2', EntityType::class, array('required' => false,'class' => 'App\Entity\School',
+                'choice_label' => 'name','expanded'=>false,'multiple'=>false,'label'  => 'School of Second Major', 'attr' => array('class' =>
+                    'form-control'),))
+            ->add('major2', EntityType::class, array('required' => false,'class' => 'App\Entity\Major',
+                'choice_label' => 'name','expanded'=>false,'multiple'=>false,'label'  => 'Second Major', 'attr' => array('class' =>
+                    'form-control'),))
+            ->add('minors', TextType::class, [
+                'label' => 'Minors',
                 'required' => false,
             ])
         ;

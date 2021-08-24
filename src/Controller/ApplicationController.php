@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Application;
 use App\Form\ApplicationType;
 use App\Repository\ApplicationRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -86,7 +88,7 @@ class ApplicationController extends AbstractController
     /**
      * @Route("/{id}/approve", name="application_approve", methods={"GET"})
      */
-    public function approve(Application $application): Response
+    public function approve(Application $application, MailerInterface $mailer): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $username = $application->getUser()->getUsername();
@@ -96,6 +98,17 @@ class ApplicationController extends AbstractController
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->persist($application);
         $this->getDoctrine()->getManager()->flush();
+
+        $email = (new TemplatedEmail())
+            ->from('scdirector@uga.edu')
+            ->to($user->getEmail())
+            ->bcc('scdirector@uga.edu')
+            ->subject('Application to Sustainability Certificate')
+            ->htmlTemplate("email/approve.html.twig")
+            ->context([
+                'user' => $user
+            ]);
+        $mailer->send($email);
 
         return $this->redirectToRoute('user_show', ['id' => $application->getUser()->getId()]);
     }

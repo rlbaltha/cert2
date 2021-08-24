@@ -37,7 +37,7 @@ class CertUserProvider extends CasUserProvider implements UserProviderInterface
             if ($user || ($init=='_' && $length > 20)) {
                 return $user;
             }
-            $email = $username.'uga.edu';
+            $email = $username.'@uga.edu';
             $user = New User();
             $user->setUsername($username);
             $user->setPassword($password);

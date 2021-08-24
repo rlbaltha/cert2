@@ -68,6 +68,22 @@ class UserType extends AbstractType
                 'label'  => 'Progress',
                 'required' => false,
             ])
+            ->add('school1', EntityType::class, array('required' => false,'class' => 'App\Entity\School',
+                'choice_label' => 'name','expanded'=>false,'multiple'=>false,'label'  => 'School', 'attr' => array('class' =>
+                    'form-control'),))
+            ->add('major1', EntityType::class, array('required' => false,'class' => 'App\Entity\Major',
+                'choice_label' => 'name','expanded'=>false,'multiple'=>false,'label'  => 'Major', 'attr' => array('class' =>
+                    'form-control'),))
+            ->add('school2', EntityType::class, array('required' => false,'class' => 'App\Entity\School',
+                'choice_label' => 'name','expanded'=>false,'multiple'=>false,'label'  => 'School of Second Major', 'attr' => array('class' =>
+                    'form-control'),))
+            ->add('major2', EntityType::class, array('required' => false,'class' => 'App\Entity\Major',
+                'choice_label' => 'name','expanded'=>false,'multiple'=>false,'label'  => 'Second Major', 'attr' => array('class' =>
+                    'form-control'),))
+            ->add('minors', TextType::class, [
+                'label' => 'Minors',
+                'required' => false,
+            ])
         ;
     }
 

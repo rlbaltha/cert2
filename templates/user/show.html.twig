@@ -42,6 +42,15 @@
             <th>Graduation</th>
             <td>{{ user.gradterm }} {{ user.gradyear }}</td>
         </tr>
+        <tr>
+            <th>School(s)::Major(s)</th>
+            <td>{% if user.school1 %}{{ user.school1.name }}::{% endif %}{% if user.major1 %}{{ user.major1.name }}{% endif%}
+                {% if user.school2 %}{{ user.school2.name }}::{% endif %}{% if user.major2 %}{{ user.major2.name }}{% endif %} </td>
+        </tr>
+        <tr>
+            <th>Minors(s)</th>
+            <td>{{ user.minors }}</td>
+        </tr>
         </tbody>
     </table>
 

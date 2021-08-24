@@ -6,10 +6,13 @@ use App\Entity\User;
 use App\Form\ProfileType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mime\Email;
 
 /**
  * @Route("/user")
@@ -37,7 +40,7 @@ class UserController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findBy(['progress'=>$progress],['gradyear'=>'DESC']),
+            'users' => $userRepository->findBy(['progress' => $progress], ['gradyear' => 'DESC']),
             'years' => $years
         ]);
     }
@@ -88,7 +91,7 @@ class UserController extends AbstractController
         $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
 
         if ($user->getLastName() == null) {
-            return $this->redirectToRoute('user_profile_edit',['id'=>$user->getId()]);
+            return $this->redirectToRoute('user_profile_edit', ['id' => $user->getId()]);
         }
         return $this->render('user/show.html.twig', [
             'user' => $user,
@@ -117,7 +120,6 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('profile');
         }
 
@@ -130,13 +132,26 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit_profile", name="user_profile_edit", methods={"GET","POST"})
      */
-    public function edit_profile(Request $request, User $user): Response
+    public function edit_profile(Request $request, User $user, MailerInterface $mailer): Response
     {
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $username = $user->getUsername();
+            $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+
+            $email = (new TemplatedEmail())
+                ->from('scdirector@uga.edu')
+                ->to($user->getEmail())
+                ->bcc('scdirector@uga.edu')
+                ->subject('Welcome to the Sustainability Certificate App')
+                ->htmlTemplate("email/welcome.html.twig")
+                ->context([
+                    'user' => $user
+                ]);
+            $mailer->send($email);
 
             return $this->redirectToRoute('profile');
         }
@@ -153,7 +168,7 @@ class UserController extends AbstractController
     public function delete(Request $request, User $user): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();

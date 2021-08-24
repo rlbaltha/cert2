@@ -1,0 +1,23 @@
+{% extends 'email/email_base.html.twig' %}
+
+{% block body %}
+    <p>{{ user.firstName }} {{ user.lastName }} , your application for the Sustainability Certificate has been approved.
+        Congrats and welcome! </p>
+    <p>Undergrads, please add the Sustainability Certificate to your active curricula program via the MyPrograms option
+        in Athena. <a href="https://sis-ssb-prod.uga.edu/PROD/twbkwbis.P_GenMenu?name=homepage" target="_blank">Add
+            Certificate in Athena Now</a></p>
+    <p>Graduate Students must also apply for the certificate through the Graduate School (there is a $25 application
+        fee): <a
+                href="http://grad.uga.edu/index.php/prospective-students/domestic-application-information/requirements/application-forms/"
+                target="_blank">http://grad.uga.edu/index.php/prospective-students/domestic-application-information/requirements/application-forms/</a>
+        Note that letters of recommendation and test scores are not needed in the online graduate school application.
+    </p>
+
+    <p>We would also like for you to take a survey as part of our assessment of the certificate program:
+        <a href="https://ugeorgia.qualtrics.com/SE/?SID=SV_eQWZLWcQhfLEb0V" target="_blank">Pre-Certificate Survey</a>
+    </p>
+    <p>Be sure to record the date that you took the survey in your Certificate Checklist.</p>
+    <p>We will have an orientation at the beginning of Fall semester, but you are welcome to contact the director at any
+        time: scdirector@uga.edu.</p>
+    <p>The Cert Staff</p>
+{% endblock %}
