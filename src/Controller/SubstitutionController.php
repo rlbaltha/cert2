@@ -6,9 +6,11 @@ use App\Entity\Substitution;
 use App\Form\SubstitutionType;
 use App\Repository\SubstitutionRepository;
 use App\Repository\UserRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -36,11 +38,13 @@ class SubstitutionController extends AbstractController
         ]);
     }
     /**
-     * @Route("/new", name="substitution_new", methods={"GET","POST"})
+     * @Route("/{checklist_id}/new", name="substitution_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, string $checklist_id): Response
     {
+        $checklist = $this->getDoctrine()->getManager()->getRepository('App:Checklist')->find($checklist_id);
         $substitution = new Substitution();
+        $substitution->setChecklist($checklist);
         $form = $this->createForm(SubstitutionType::class, $substitution);
         $form->handleRequest($request);
 
@@ -49,7 +53,7 @@ class SubstitutionController extends AbstractController
             $entityManager->persist($substitution);
             $entityManager->flush();
 
-            return $this->redirectToRoute('substitution_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('profile', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('substitution/new.html.twig', [
@@ -66,6 +70,52 @@ class SubstitutionController extends AbstractController
         return $this->render('substitution/show.html.twig', [
             'substitution' => $substitution,
         ]);
+    }
+
+    /**
+     * @Route("/{id}/approve", name="substitution_approve", methods={"GET"})
+     */
+    public function approve(String $id, MailerInterface $mailer): Response
+    {
+        $substitution = $this->getDoctrine()->getManager()->getRepository('App:Substitution')->find($id);
+        $substitution->setStatus('Approved');
+        $this->getDoctrine()->getManager()->persist($substitution);
+        $this->getDoctrine()->getManager()->flush();
+        $user = $substitution->getChecklist()->getUser();
+        $email = (new TemplatedEmail())
+            ->from('scdirector@uga.edu')
+            ->to($user->getEmail())
+            ->bcc('scdirector@uga.edu')
+            ->subject('Sustainability Certificate Substitution')
+            ->htmlTemplate("email/approve_substitution.html.twig")
+            ->context([
+                'user' => $user
+            ]);
+        $mailer->send($email);
+        return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+    }
+
+    /**
+     * @Route("/{id}/deny", name="substitution_deny", methods={"GET"})
+     */
+    public function deny(String $id, MailerInterface $mailer): Response
+    {
+        $substitution = $this->getDoctrine()->getManager()->getRepository('App:Substitution')->find($id);
+        $substitution->setStatus('Denied');
+        $this->getDoctrine()->getManager()->persist($substitution);
+        $this->getDoctrine()->getManager()->flush();
+        $user = $substitution->getChecklist()->getUser();
+        $email = (new TemplatedEmail())
+            ->from('scdirector@uga.edu')
+            ->to($user->getEmail())
+            ->bcc('scdirector@uga.edu')
+            ->subject('Sustainability Certificate Substitution')
+            ->htmlTemplate("email/deny_substitution.html.twig")
+            ->context([
+                'user' => $user
+            ]);
+        $mailer->send($email);
+        return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
     }
 
     /**

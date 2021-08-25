@@ -30,7 +30,7 @@ class Substitution
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $status;
+    private $status='Created';
 
     /**
      * @ORM\ManyToOne(targetEntity=Checklist::class, inversedBy="substitutions")

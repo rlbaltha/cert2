@@ -28,6 +28,7 @@
                    aria-haspopup="true" aria-expanded="false">
                     By Graduation Date
                 </a>
+                <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Inactive'}) }}">Inactive</a>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     {% for year in years %}

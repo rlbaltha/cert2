@@ -3,7 +3,10 @@
 {% block title %}Substitution index - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Substitutions</h1>
+    <h1>Substitutions
+        <span class="text-muted">( {{ app.request.get('status') }} -- {{ substitutions|length }})</span>
+
+    </h1>
     <a class="btn btn-primary d-inline" href="{{ path('substitution_find', {'status': 'Created'}) }}">Created</a>
     <a class="btn btn-primary d-inline" href="{{ path('substitution_find', {'status': 'Approved'}) }}">Approved</a>
     <a class="btn btn-primary d-inline" href="{{ path('substitution_find', {'status': 'Denied'}) }}">Denied</a>
@@ -22,7 +25,14 @@
                 <td><a href="{{ path('substitution_show', {'id': substitution.id}) }}">{{ substitution.checklist.user.firstName }} {{ substitution.checklist.user.lastName }}</a></td>
                 <td>{{ substitution.requirement }}</td>
                 <td>{{ substitution.description|raw }}</td>
-                <td>{{ substitution.status }}</td>
+                <td>{{ substitution.status }}
+                    {% if is_granted('ROLE_ADMIN') and substitution.status!='Approved' %}
+                        <a class="d-inline float-right btn btn-primary btn-sm" href="{{ path('substitution_approve', {'id': substitution.id}) }}">Approve</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') and substitution.status!='Denied' %}
+                        <a class="d-inline float-right btn btn-danger btn-sm" href="{{ path('substitution_deny', {'id': substitution.id}) }}">Deny</a>
+                    {% endif %}
+                </td>
             </tr>
         {% else %}
             <tr>

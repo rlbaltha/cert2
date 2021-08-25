@@ -99,6 +99,48 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/inactive", name="user_inactive", methods={"GET"})
+     */
+    public function inactive(User $user, MailerInterface $mailer): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $user->setProgress('Inactive');
+        $this->getDoctrine()->getManager()->persist($user);
+        $this->getDoctrine()->getManager()->flush();
+
+        $email = (new TemplatedEmail())
+            ->from('scdirector@uga.edu')
+            ->to($user->getEmail())
+            ->bcc('scdirector@uga.edu')
+            ->subject('Sustainability Certificate Inactive')
+            ->htmlTemplate("email/inactive.html.twig")
+            ->context([
+                'user' => $user
+            ]);
+        $mailer->send($email);
+
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/graduating", name="user_graduating", methods={"GET"})
+     */
+    public function graduating(User $user, MailerInterface $mailer): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $user->setProgress('Graduating');
+        $this->getDoctrine()->getManager()->persist($user);
+        $this->getDoctrine()->getManager()->flush();
+
+
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
      * @Route("/{id}/show", name="user_show", methods={"GET"})
      */
     public function show(User $user): Response

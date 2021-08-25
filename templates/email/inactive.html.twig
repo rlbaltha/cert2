@@ -1,0 +1,8 @@
+{% extends 'email/email_base.html.twig' %}
+
+{% block body %}
+    <p>{{ user.firstName }} {{ user.lastName }}, it looks as if you are not planning to complete the Sustainability Certificate.  We have listed you as inactive.
+        Please let us know if we are
+        mistaken and you plan to continue.  We wish you well in all you undertake.</p>
+    <p>The Sustainability Certificate Staff</p>
+{% endblock %}

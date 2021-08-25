@@ -27,15 +27,7 @@ class SubstitutionType extends AbstractType
             ])
             ->add('description', CKEditorType::class, [
                 'config_name' => 'editor_simple',
-                'label' => 'What is your interest in Sustainability',
-            ])
-            ->add('status', ChoiceType::class, [
-                'choices'  => [
-                    'Created' => 'Created',
-                    'Approved' => 'Approved',
-                    'Denied' => 'Denied',
-                ],
-                'expanded'=> true,
+                'label' => 'Please explain how this substitution meets the requirement.',
             ])
         ;
     }

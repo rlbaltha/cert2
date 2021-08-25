@@ -1,0 +1,7 @@
+{% extends 'email/email_base.html.twig' %}
+
+{% block body %}
+    <p>{{ user.firstName }} {{ user.lastName }}, your substitution for the Sustainability Certificate has been denied.</p>
+    <p>If you would like more information or would like to appeal, please contact the certificate director: scdirector@uga.edu.</p>
+    <p>The Cert Staff</p>
+{% endblock %}
