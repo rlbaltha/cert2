@@ -22,7 +22,7 @@
         <tbody>
         {% for substitution in substitutions %}
             <tr>
-                <td><a href="{{ path('substitution_show', {'id': substitution.id}) }}">{{ substitution.checklist.user.firstName }} {{ substitution.checklist.user.lastName }}</a></td>
+                <td><a href="{{ path('user_show', {'id': substitution.checklist.user.id}) }}">{{ substitution.checklist.user.firstName }} {{ substitution.checklist.user.lastName }}</a></td>
                 <td>{{ substitution.requirement }}</td>
                 <td>{{ substitution.description|raw }}</td>
                 <td>{{ substitution.status }}

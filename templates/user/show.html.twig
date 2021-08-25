@@ -7,6 +7,7 @@
     <br/>
     <h2 class="d-inline ">Profile</h2>
     {% if is_granted('ROLE_ADMIN') %}
+        <a class="d-inline float-right btn btn-primary" href="{{ path('user_alumni', {'id': user.id}) }}">Mark Alumni</a>
         <a class="d-inline float-right btn btn-primary" href="{{ path('user_inactive', {'id': user.id}) }}">Mark Inactive</a>
         <a class="d-inline float-right btn btn-primary" href="{{ path('user_graduating', {'id': user.id}) }}">Mark Graduating</a>
         <a class="d-inline float-right btn btn-primary" href="{{ path('user_edit', {'id': user.id}) }}">Edit Profile</a>
@@ -132,11 +133,11 @@
                         <td>{{ substitution.requirement }}</td>
                         <td>{{ substitution.description|raw }}</td>
                         <td>{{ substitution.status }}
-                            {% if is_granted('ROLE_ADMIN') and substitution.status!='Approved' %}
-                            <a class="d-inline float-right btn btn-primary btn-sm" href="{{ path('substitution_approve', {'id': substitution.id}) }}">Approve</a>
-                            {% endif %}
                             {% if is_granted('ROLE_ADMIN') and substitution.status!='Denied' %}
                                 <a class="d-inline float-right btn btn-danger btn-sm" href="{{ path('substitution_deny', {'id': substitution.id}) }}">Deny</a>
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') and substitution.status!='Approved' %}
+                            <a class="d-inline float-right btn btn-primary btn-sm" href="{{ path('substitution_approve', {'id': substitution.id}) }}">Approve</a>
                             {% endif %}
                         </td>
                     </tr>
