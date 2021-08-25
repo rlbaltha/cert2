@@ -23,6 +23,7 @@ class SubstitutionController extends AbstractController
      */
     public function index(SubstitutionRepository $substitutionRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('substitution/index.html.twig', [
             'substitutions' => $substitutionRepository->findAll(),
         ]);
@@ -33,6 +34,7 @@ class SubstitutionController extends AbstractController
      */
     public function find(SubstitutionRepository $substitutionRepositoryy, string $status): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('substitution/index.html.twig', [
             'substitutions' => $substitutionRepositoryy->findBy(['status'=>$status]),
         ]);
@@ -67,6 +69,7 @@ class SubstitutionController extends AbstractController
      */
     public function show(Substitution $substitution): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('substitution/show.html.twig', [
             'substitution' => $substitution,
         ]);
@@ -77,6 +80,7 @@ class SubstitutionController extends AbstractController
      */
     public function approve(String $id, MailerInterface $mailer): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $substitution = $this->getDoctrine()->getManager()->getRepository('App:Substitution')->find($id);
         $substitution->setStatus('Approved');
         $this->getDoctrine()->getManager()->persist($substitution);
@@ -100,6 +104,7 @@ class SubstitutionController extends AbstractController
      */
     public function deny(String $id, MailerInterface $mailer): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $substitution = $this->getDoctrine()->getManager()->getRepository('App:Substitution')->find($id);
         $substitution->setStatus('Denied');
         $this->getDoctrine()->getManager()->persist($substitution);
@@ -143,6 +148,7 @@ class SubstitutionController extends AbstractController
      */
     public function delete(Request $request, Substitution $substitution): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$substitution->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($substitution);

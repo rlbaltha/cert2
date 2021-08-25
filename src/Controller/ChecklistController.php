@@ -71,6 +71,7 @@ class ChecklistController extends AbstractController
      */
     public function show(Checklist $checklist): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('checklist/show.html.twig', [
             'checklist' => $checklist,
         ]);
