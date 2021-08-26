@@ -55,6 +55,7 @@
         <tr>
             <th>Name<i class="fa fa-fw fa-sort"></i></th>
             <th>Email<i class="fa fa-fw fa-sort"></i></th>
+            <th>Major(s)<i class="fa fa-fw fa-sort"></i></th>
             <th>Graduation<i class="fa fa-fw fa-sort"></i></th>
             <th>Progress<i class="fa fa-fw fa-sort"></i></th>
         </tr>
@@ -64,6 +65,8 @@
             <tr>
                 <td><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.firstName }} {{ user.lastName }}</a></td>
                 <td>{{ user.email }} {{ user.altemail }}</td>
+                <td>{% if user.school1 %}{{ user.school1.name }}::{% endif %}{% if user.major1 %}{{ user.major1.name }}{% endif%}
+                    {% if user.school2 %}{{ user.school2.name }}::{% endif %}{% if user.major2 %}{{ user.major2.name }}{% endif %} </td>
                 <td>{{ user.gradyear }} {{ user.gradterm }} </td>
                 <td>{{ user.progress }}</td>
             </tr>
