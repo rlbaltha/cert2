@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\ProfileType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Service\Emailer;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -101,23 +102,14 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/inactive", name="user_inactive", methods={"GET"})
      */
-    public function inactive(User $user, MailerInterface $mailer): Response
+    public function inactive(User $user, Emailer $emailer): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $user->setProgress('Inactive');
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
-        $email = (new TemplatedEmail())
-            ->from('scdirector@uga.edu')
-            ->to($user->getEmail())
-            ->bcc('scdirector@uga.edu')
-            ->subject('Sustainability Certificate Inactive')
-            ->htmlTemplate("email/inactive.html.twig")
-            ->context([
-                'user' => $user
-            ]);
-        $mailer->send($email);
+        $emailer->sendEmail('inactive', $user, $user->getEmail());
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
@@ -127,23 +119,14 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/alumni", name="user_alumni", methods={"GET"})
      */
-    public function alumni(User $user, MailerInterface $mailer): Response
+    public function alumni(User $user, Emailer $emailer): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $user->setProgress('Alumni');
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
-        $email = (new TemplatedEmail())
-            ->from('scdirector@uga.edu')
-            ->to($user->getEmail())
-            ->bcc('scdirector@uga.edu')
-            ->subject('Sustainability Certificate Graduation')
-            ->htmlTemplate("email/alumni.html.twig")
-            ->context([
-                'user' => $user
-            ]);
-        $mailer->send($email);
+        $emailer->sendEmail('alumni', $user, $user->getEmail());
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
@@ -200,7 +183,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit_profile", name="user_profile_edit", methods={"GET","POST"})
      */
-    public function edit_profile(Request $request, User $user, MailerInterface $mailer): Response
+    public function edit_profile(Request $request, User $user, Emailer $emailer): Response
     {
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
@@ -210,16 +193,7 @@ class UserController extends AbstractController
             $username = $user->getUsername();
             $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
 
-            $email = (new TemplatedEmail())
-                ->from('scdirector@uga.edu')
-                ->to($user->getEmail())
-                ->bcc('scdirector@uga.edu')
-                ->subject('Welcome to the Sustainability Certificate App')
-                ->htmlTemplate("email/welcome.html.twig")
-                ->context([
-                    'user' => $user
-                ]);
-            $mailer->send($email);
+            $emailer->sendEmail('edit_profile', $user, $user->getEmail());
 
             return $this->redirectToRoute('profile');
         }

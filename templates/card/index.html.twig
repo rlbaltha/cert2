@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Card index{% endblock %}
+
+{% block body %}
+    <h1>Card index</h1>
+    <a class="btn btn-primary" href="{{ path('card_new') }}">New Card</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Function</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for card in cards %}
+            <tr>
+                <td><a href="{{ path('card_show', {'id': card.id}) }}">{{ card.function }}</a></td>
+                <td>{{ card.title }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -52,7 +52,7 @@ class Application
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $status='Still Editing';
+    private $status='Ready for Review';
 
     /**
      * @var \DateTime $created

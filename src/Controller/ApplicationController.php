@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Application;
 use App\Form\ApplicationType;
 use App\Repository\ApplicationRepository;
+use App\Service\Emailer;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,7 +60,7 @@ class ApplicationController extends AbstractController
     /**
      * @Route("/new", name="application_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Emailer $emailer): Response
     {
         $username = $this->getUser()->getUsername();
         $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
@@ -74,6 +75,8 @@ class ApplicationController extends AbstractController
             $entityManager->persist($application);
             $entityManager->flush();
 
+            $emailer->sendEmail('application', $user, 'scdirector@uga.edu');
+
             return $this->redirectToRoute('user_show', ['id' => $application->getUser()->getId()]);
         }
 
@@ -85,9 +88,9 @@ class ApplicationController extends AbstractController
 
 
     /**
-     * @Route("/{id}/approve", name="application_approve", methods={"GET"})
+     * @Route("/{id}/application_approve", name="application_approve", methods={"GET"})
      */
-    public function approve(Application $application, MailerInterface $mailer): Response
+    public function approve(Application $application, Emailer $emailer): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $username = $application->getUser()->getUsername();
@@ -98,16 +101,7 @@ class ApplicationController extends AbstractController
         $this->getDoctrine()->getManager()->persist($application);
         $this->getDoctrine()->getManager()->flush();
 
-        $email = (new TemplatedEmail())
-            ->from('scdirector@uga.edu')
-            ->to($user->getEmail())
-            ->bcc('scdirector@uga.edu')
-            ->subject('Application to Sustainability Certificate')
-            ->htmlTemplate("email/approve.html.twig")
-            ->context([
-                'user' => $user
-            ]);
-        $mailer->send($email);
+        $emailer->sendEmail('application_approve', $user, $user->getEmail());
 
         return $this->redirectToRoute('user_show', ['id' => $application->getUser()->getId()]);
     }
@@ -115,14 +109,15 @@ class ApplicationController extends AbstractController
     /**
      * @Route("/{id}/edit", name="application_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Application $application): Response
+    public function edit(Request $request, Application $application, Emailer $emailer): Response
     {
         $form = $this->createForm(ApplicationType::class, $application);
         $form->handleRequest($request);
-
+        $user = $application->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $emailer->sendEmail('application', $user, 'scdirector@uga.edu');
             return $this->redirectToRoute('user_show', ['id' => $application->getUser()->getId()]);
         }
 
