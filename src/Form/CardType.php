@@ -15,7 +15,7 @@ class CardType extends AbstractType
     {
         $builder
             ->add('application', TextType::class, [
-                'label' => 'Application (i.e. where the app uses the test; please do not edit)',
+                'label' => 'Application (i.e. where the app uses the content; please do not edit)',
             ])
             ->add('title', TextType::class, [
                 'label' => 'Title (Subject)',
