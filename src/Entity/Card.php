@@ -27,10 +27,6 @@ class Card
      */
     private $title;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $body;
 
     public function getId(): ?int
     {
@@ -60,16 +56,5 @@ class Card
 
         return $this;
     }
-
-    public function getBody(): ?string
-    {
-        return $this->body;
-    }
-
-    public function setBody(?string $body): self
-    {
-        $this->body = $body;
-
-        return $this;
-    }
+    
 }
