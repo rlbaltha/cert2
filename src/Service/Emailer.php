@@ -16,9 +16,9 @@ class Emailer
         $this->mailer = $mailer;
     }
 
-    public function sendEmail(string $function, User $user, string $toAddress)
+    public function sendEmail(string $application, User $user, string $toAddress)
     {
-        $card = $this->entityManager->getRepository('App:Card')->findOneBy(['function'=>$function]);
+        $card = $this->entityManager->getRepository('App:Card')->findOneBy(['application'=>$application]);
         $email = (new TemplatedEmail())
             ->from('scdirector@uga.edu')
             ->to($toAddress)
