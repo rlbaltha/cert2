@@ -8,14 +8,14 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Function</th>
+                <th>Application</th>
                 <th>Title</th>
             </tr>
         </thead>
         <tbody>
         {% for card in cards %}
             <tr>
-                <td><a href="{{ path('card_show', {'id': card.id}) }}">{{ card.function }}</a></td>
+                <td><a href="{{ path('card_show', {'id': card.id}) }}">{{ card.application }}</a></td>
                 <td>{{ card.title }}</td>
             </tr>
         {% else %}

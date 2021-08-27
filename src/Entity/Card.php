@@ -16,34 +16,28 @@ class Card
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $function;
+    
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $title;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $body;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $application;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getFunction(): ?string
-    {
-        return $this->function;
-    }
-
-    public function setFunction(?string $function): self
-    {
-        $this->function = $function;
-
-        return $this;
-    }
 
     public function getTitle(): ?string
     {
@@ -56,5 +50,28 @@ class Card
 
         return $this;
     }
-    
+
+    public function getBody(): ?string
+    {
+        return $this->body;
+    }
+
+    public function setBody(?string $body): self
+    {
+        $this->body = $body;
+
+        return $this;
+    }
+
+    public function getApplication(): ?string
+    {
+        return $this->application;
+    }
+
+    public function setApplication(?string $application): self
+    {
+        $this->application = $application;
+
+        return $this;
+    }
 }
