@@ -36,23 +36,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
 
     public function findOneByUsername($value): ?User
     {
@@ -76,6 +59,65 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->setParameter('year', $year)
             ->setParameter('term', $term)
             ->setParameter('progress', 'Inactive')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+    public function countByMajor()
+    {
+        return $this->createQueryBuilder('u')
+            ->join('u.major1','m1')
+            ->select('count(u.id) as countMajor, m1.name as name')
+            ->andWhere('u.progress = :progress')
+            ->groupBy('m1.name')
+            ->setParameter('progress', 'Checklist')
+            ->orderBy('countMajor', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function countBySchool()
+    {
+        return $this->createQueryBuilder('u')
+            ->join('u.school1','s1')
+            ->select('count(u.id) as countSchool, s1.name as name')
+            ->andWhere('u.progress = :progress')
+            ->groupBy('s1.name')
+            ->setParameter('progress', 'Checklist')
+            ->orderBy('countSchool', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function countByProgress()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u.id) as countProgress, u.progress as name')
+            ->andWhere('u.progress != :progress1')
+            ->andWhere('u.progress != :progress2')
+            ->setParameter('progress1', 'Inactive')
+            ->setParameter('progress2', 'Admin')
+            ->groupBy('name')
+            ->orderBy('countProgress', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function countByGrad()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u.id) as countGrad, u.gradyear as year')
+            ->andWhere('u.progress = :progress1')
+            ->orWhere('u.progress = :progress2')
+            ->setParameter('progress1', 'Checklist')
+            ->setParameter('progress2', 'Alumni')
+            ->groupBy('year')
+            ->orderBy('year', 'DESC')
             ->getQuery()
             ->getResult()
             ;

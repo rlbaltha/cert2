@@ -19,32 +19,65 @@ class ChecklistRepository extends ServiceEntityRepository
         parent::__construct($registry, Checklist::class);
     }
 
-    // /**
-    //  * @return Checklist[] Returns an array of Checklist objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function countByAnchor()
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->join('c.anchor','a')
+            ->select('count(c.id) as countCourse, a.name as name')
+            ->groupBy('a.name')
+            ->orderBy('countCourse', 'DESC')
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Checklist
+    public function countBySphere1()
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->join('c.sphere1','a')
+            ->select('count(c.id) as countCourse, a.name as name')
+            ->groupBy('a.name')
+            ->orderBy('countCourse', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult()
+            ;
     }
-    */
+
+    public function countBySphere2()
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.sphere2','a')
+            ->select('count(c.id) as countCourse, a.name as name')
+            ->groupBy('a.name')
+            ->orderBy('countCourse', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function countBySphere3()
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.sphere3','a')
+            ->select('count(c.id) as countCourse, a.name as name')
+            ->groupBy('a.name')
+            ->orderBy('countCourse', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function countBySeminar()
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.seminar','a')
+            ->select('count(c.id) as countCourse, a.name as name')
+            ->groupBy('a.name')
+            ->orderBy('countCourse', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
 }

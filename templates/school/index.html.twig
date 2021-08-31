@@ -11,13 +11,18 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Course Count</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for school in schools %}
             <tr>
-                <td><a href="{{ path('school_show', {'id': school.id}) }}">{{ school.name }}</a></td>
+                <td>{{ school.name }}</td>
+                <td>
+                    <a href="{{ path('school_show', {'id': school.id}) }}">Courses:  {{ school.courses|length }}</a>
+
+                </td>
                 <td>
                     <a href="{{ path('school_edit', {'id': school.id}) }}">edit</a>
                 </td>

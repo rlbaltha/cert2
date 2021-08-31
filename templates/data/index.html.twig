@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Data  - {{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1>Certificate Data</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2>Students by Progress/Status</h2>
+                <table class="table">
+                    {% for progress in countByProgress %}
+                        <tr><td>{{ progress.name }}</td> <td>{{ progress.countProgress }}</td></tr>
+                    {% endfor %}
+                </table>
+
+                <h2>Students by Graduation Year</h2>
+                <table class="table">
+                    {% for year in countByGrad %}
+                    <tr><td>{{ year.year }}</td> <td> {{ year.countGrad }}</td></tr>
+                    {% endfor %}
+                </table>
+
+                <h2>Current Students by Schools</h2>
+                <table class="table">
+                    {% for school in countBySchool %}
+                    <tr><td>{{ school.name }}</td> <td> {{ school.countSchool }}</td></tr>
+                    {% endfor %}
+                </table>
+
+                <h2>Current Students by Majors</h2>
+                <table class="table">
+                    {% for major in countByMajor %}
+                    <tr><td>{{ major.name }}</td> <td> {{ major.countMajor }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+
+
+            <div class="col">
+                <h2>Checklist Courses: Anchor</h2>
+                <table class="table">
+                    {% for course in countByAnchor %}
+                    <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
+                    {% endfor %}
+                </table>
+                <h2>Checklist Courses: Sphere1</h2>
+                <table class="table">
+                    {% for course in countBySphere1 %}
+                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
+                    {% endfor %}
+                </table>
+                <h2>Checklist Courses: Sphere2</h2>
+                <table class="table">
+                    {% for course in countBySphere2 %}
+                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
+                    {% endfor %}
+                </table>
+                <h2>Checklist Courses: Sphere3</h2>
+                <table class="table">
+                    {% for course in countBySphere3 %}
+                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
+                    {% endfor %}
+                </table>
+                <h2>Checklist Courses: Seminar</h2>
+                <table class="table">
+                    {% for course in countBySeminar %}
+                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
