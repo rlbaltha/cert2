@@ -1,6 +1,6 @@
 {% extends 'email/email_base.html.twig' %}
 
 {% block body %}
-    {{ user.firstName }} {{ user.lastName }}
+    {{ user.firstName }} {{ user.lastName }} ({{ user.email }})
     {{ card.body|raw }}
 {% endblock %}
