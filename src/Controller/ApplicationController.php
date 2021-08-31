@@ -96,6 +96,8 @@ class ApplicationController extends AbstractController
         $username = $application->getUser()->getUsername();
         $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
         $user->setProgress('Checklist');
+        $portfolio = 'https://ctlsites.uga.edu/sustainability-' . $user->getFirstName() . $user->getLastName();
+        $user->setPortfolio(strtolower($portfolio));
         $application->setStatus('Approved');
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->persist($application);
