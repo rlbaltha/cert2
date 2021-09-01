@@ -89,6 +89,11 @@
     </div>
 </nav>
 <div class="container">
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success">
+            {{ message|raw }}
+        </div>
+    {% endfor %}
     {% block body %}{% endblock %}
 </div>
 

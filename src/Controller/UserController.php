@@ -111,6 +111,9 @@ class UserController extends AbstractController
 
         $emailer->sendEmail('inactive', $user, $user->getEmail());
 
+        $message = 'The student was marked Inactive and sent an email.';
+        $this->addFlash('notice', $message);
+
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
@@ -128,6 +131,9 @@ class UserController extends AbstractController
 
         $emailer->sendEmail('alumni', $user, $user->getEmail());
 
+        $message = 'The student was marked Alumni and sent an email.';
+        $this->addFlash('notice', $message);
+
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
@@ -143,6 +149,8 @@ class UserController extends AbstractController
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
+        $message = 'The student was listed as graduating.';
+        $this->addFlash('notice', $message);
 
         return $this->render('user/show.html.twig', [
             'user' => $user,

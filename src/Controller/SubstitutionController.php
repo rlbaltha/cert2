@@ -88,6 +88,10 @@ class SubstitutionController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
         $user = $substitution->getChecklist()->getUser();
         $emailer->sendEmail('substitution_approve', $user, $user->getEmail());
+
+        $message = 'The substitution was marked approved and the student sent an email.';
+        $this->addFlash('notice', $message);
+
         return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
     }
 
@@ -103,6 +107,10 @@ class SubstitutionController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
         $user = $substitution->getChecklist()->getUser();
         $emailer->sendEmail('substitution_deny', $user, $user->getEmail());
+
+        $message = 'The substitution was denied and the student sent an email.';
+        $this->addFlash('notice', $message);
+
         return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
     }
 

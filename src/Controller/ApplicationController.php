@@ -107,6 +107,9 @@ class ApplicationController extends AbstractController
 
         $emailer->sendEmail('create_portfolio', $user, 'ameya.sawadkar@uga.edu');
 
+        $message = 'The application was approved, the student was sent an email, and an email was sent requesting the creation of a portfolio.';
+        $this->addFlash('notice', $message);
+
         return $this->redirectToRoute('user_show', ['id' => $application->getUser()->getId()]);
     }
 
