@@ -113,6 +113,11 @@ class User implements UserInterface
      */
     private $portfolio;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $certificates;
+
     public function __construct()
     {
         $this->checklists = new ArrayCollection();
@@ -408,6 +413,18 @@ class User implements UserInterface
     public function setPortfolio(?string $portfolio): self
     {
         $this->portfolio = $portfolio;
+
+        return $this;
+    }
+
+    public function getCertificates(): ?string
+    {
+        return $this->certificates;
+    }
+
+    public function setCertificates(?string $certificates): self
+    {
+        $this->certificates = $certificates;
 
         return $this;
     }

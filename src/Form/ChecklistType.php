@@ -34,7 +34,7 @@ class ChecklistType extends AbstractType
             ])
             ->add('anchor', EntityType::class, [
                 'class' => Course::class,
-                'choices' => $this->courseRepository->findBy(['sphere'=>'Anchor'], ['name' => 'ASC']),
+                'choices' => $this->courseRepository->findForChecklist('Anchor'),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'label'  => 'Anchor Course',
@@ -52,7 +52,7 @@ class ChecklistType extends AbstractType
             ])
             ->add('sphere1', EntityType::class, [
                 'class' => Course::class,
-                'choices' => $this->courseRepository->findBy(['sphere'=>'Social'], ['name' => 'ASC']),
+                'choices' => $this->courseRepository->findForChecklist('Social'),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'label'  => 'Social Sphere',
@@ -61,7 +61,7 @@ class ChecklistType extends AbstractType
             ])
             ->add('sphere2', EntityType::class, [
                 'class' => Course::class,
-                'choices' => $this->courseRepository->findBy(['sphere'=>'Economic'], ['name' => 'ASC']),
+                'choices' => $this->courseRepository->findForChecklist('Economic'),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'label'  => 'Economic Sphere',
@@ -70,7 +70,7 @@ class ChecklistType extends AbstractType
             ])
             ->add('sphere3', EntityType::class, [
                 'class' => Course::class,
-                'choices' => $this->courseRepository->findBy(['sphere'=>'Ecological'], ['name' => 'ASC']),
+                'choices' => $this->courseRepository->findForChecklist('Ecological'),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'label'  => 'Ecological Sphere',

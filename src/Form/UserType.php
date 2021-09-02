@@ -84,6 +84,10 @@ class UserType extends AbstractType
                 'label' => 'Minors',
                 'required' => false,
             ])
+            ->add('certificates', TextType::class, [
+                'label' => 'Certificates',
+                'required' => false,
+            ])
             ->add('portfolio', TextType::class, [
                 'label' => 'Portfolio',
                 'required' => false,

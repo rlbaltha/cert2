@@ -19,4 +19,19 @@ class CourseRepository extends ServiceEntityRepository
         parent::__construct($registry, Course::class);
     }
 
+
+    /**
+     * find course by sphere
+     *
+     * @return Course[]
+     */
+    public function findForChecklist($sphere) {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.sphere = :sphere or c.sphere = :any')
+            ->setParameter('sphere', $sphere)
+            ->setParameter('any', 'Any')
+            ->orderBy('c.name ')
+            ->getQuery()
+            ->getResult();
+    }
 }
