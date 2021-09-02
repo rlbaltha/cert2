@@ -4,13 +4,11 @@
 
 {% block body %}
     <h1>Major</h1>
+    <a  class="btn btn-primary" href="{{ path('major_edit', {'id': major.id}) }}">Edit</a>
 
+    {{ include('major/_delete_form.html.twig') }}
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ major.id }}</td>
-            </tr>
             <tr>
                 <th>Name</th>
                 <td>{{ major.name }}</td>
@@ -18,9 +16,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('major_index') }}">back to list</a>
 
-    <a href="{{ path('major_edit', {'id': major.id}) }}">edit</a>
 
-    {{ include('major/_delete_form.html.twig') }}
 {% endblock %}
