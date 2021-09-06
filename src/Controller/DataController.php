@@ -13,7 +13,7 @@ class DataController extends AbstractController
      */
     public function index(): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_INTERN');
         $countByMajor = $this->getDoctrine()->getManager()->getRepository('App:User')->countByMajor();
         $countBySchool = $this->getDoctrine()->getManager()->getRepository('App:User')->countBySchool();
         $countByProgress = $this->getDoctrine()->getManager()->getRepository('App:User')->countByProgress();

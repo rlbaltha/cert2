@@ -41,20 +41,25 @@
                     <a class="nav-link" href="{{ path('user_find', {'progress': 'Admin'}) }}">Admin</a>
                 </li>
                 <li class="nav-item active">
-                <a class="nav-link" href="{{ path('substitution_find', {'status': 'Created'}) }}">Substitutions</a>
+                    <a class="nav-link" href="{{ path('substitution_find', {'status': 'Created'}) }}">Substitutions</a>
                 </li>
+            {% endif %}
+            {% if is_granted('ROLE_INTERN') %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Admin Tools
                     </a>
+
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ path('data') }}">Data</a>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <a class="dropdown-item" href="{{ path('school_index') }}">Schools</a>
                         <a class="dropdown-item" href="{{ path('major_index') }}">Majors</a>
                         <a class="dropdown-item" href="{{ path('course_index') }}">Courses</a>
                         <a class="dropdown-item" href="{{ path('year_index') }}">Years</a>
                         <a class="dropdown-item" href="{{ path('card_index') }}">Cards(Emails)</a>
+                        {% endif %}
                     </div>
                 </li>
             {% endif %}
