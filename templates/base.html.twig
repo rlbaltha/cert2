@@ -59,6 +59,8 @@
                         <a class="dropdown-item" href="{{ path('course_index') }}">Courses</a>
                         <a class="dropdown-item" href="{{ path('year_index') }}">Years</a>
                         <a class="dropdown-item" href="{{ path('card_index') }}">Cards(Emails)</a>
+                            {% else %}
+                                <a class="dropdown-item" href="{{ path('profile') }}">Profile</a>
                         {% endif %}
                     </div>
                 </li>
