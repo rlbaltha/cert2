@@ -12,17 +12,17 @@
             Courses By Type
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Anchor', 'level': 'Undergrad'}) }}">Undergrad Anchor</a>
-            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Seminar', 'level': 'Undergrad'}) }}">Undergrad Seminar</a>
-            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Ecological', 'level': 'Undergrad'}) }}">Undergrad Ecological</a>
-            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Social', 'level': 'Undergrad'}) }}">Undergrad Social</a>
-            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Economic', 'level': 'Undergrad'}) }}">Undergrad Economic</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'level': 'Undergrad', 'sphere' : 'Anchor'}) }}">Undergrad Anchor</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'level': 'Undergrad', 'sphere' : 'Seminar'}) }}">Undergrad Seminar</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'level': 'Undergrad', 'sphere' : 'Ecological'}) }}">Undergrad Ecological</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'level': 'Undergrad', 'sphere' : 'Social'}) }}">Undergrad Social</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'level': 'Undergrad', 'sphere' : 'Economic'}) }}">Undergrad Economic</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Anchor', 'level': 'Grad'}) }}">Grad Anchor</a>
-            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Seminar', 'level': 'Grad'}) }}">Grad Seminar</a>
-            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Ecological', 'level': 'Grad'}) }}">Grad Ecological</a>
-            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Social', 'level': 'Grad'}) }}">Grad Social</a>
-            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Economic', 'level': 'Grad'}) }}">Grad Economic</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'level': 'Grad', 'sphere' : 'Anchor'}) }}">Grad Anchor</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'level': 'Grad', 'sphere' : 'Seminar'}) }}">Grad Seminar</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'level': 'Grad', 'sphere' : 'Ecological'}) }}">Grad Ecological</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'level': 'Grad', 'sphere' : 'Social'}) }}">Grad Social</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'level': 'Grad', 'sphere' : 'Economic'}) }}">Grad Economic</a>
         </div>
     </div>
     <table class="table">
