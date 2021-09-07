@@ -29,7 +29,7 @@ class CourseController extends AbstractController
     /**
      * @Route("/list/{sphere}/{level}", name="course_find", methods={"GET"})
      */
-    public function findByType(CourseRepository $courseRepository, string $sphere, string $level): Response
+    public function findByType(CourseRepository $courseRepository, string $level, string $sphere): Response
     {
         $sphere = ucwords($sphere);
         $level = ucwords($level);
