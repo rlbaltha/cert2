@@ -4,25 +4,49 @@
 
 {% block body %}
     <h1>Course index</h1>
-
+    {% if is_granted('ROLE_ADMIN') %}
+    <a class="btn btn-primary" href="{{ path('course_new') }}">Create new</a>
+    {% endif %}
+    <div class="dropdown d-inline">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Courses By Type
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Anchor', 'level': 'Undergrad'}) }}">Undergrad Anchor</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Seminar', 'level': 'Undergrad'}) }}">Undergrad Seminar</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Ecological', 'level': 'Undergrad'}) }}">Undergrad Ecological</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Social', 'level': 'Undergrad'}) }}">Undergrad Social</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Economic', 'level': 'Undergrad'}) }}">Undergrad Economic</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Anchor', 'level': 'Grad'}) }}">Grad Anchor</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Seminar', 'level': 'Grad'}) }}">Grad Seminar</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Ecological', 'level': 'Grad'}) }}">Grad Ecological</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Social', 'level': 'Grad'}) }}">Grad Social</a>
+            <a class="dropdown-item" href="{{ path('course_find', {'sphere' : 'Economic', 'level': 'Grad'}) }}">Grad Economic</a>
+        </div>
+    </div>
     <table class="table">
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Sphere</th>
                 <th>Level</th>
+                {% if is_granted('ROLE_ADMIN') %}
                 <th>actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
         {% for course in courses %}
             <tr>
-                <td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td>
+                <td>{{ course.name }}</td>
                 <td>{{ course.sphere }}</td>
                 <td>{{ course.level }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
                 <td>
                     <a href="{{ path('course_edit', {'id': course.id}) }}">edit</a>
                 </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -32,5 +56,5 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('course_new') }}">Create new</a>
+
 {% endblock %}

@@ -34,4 +34,22 @@ class CourseRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * find course by sphere
+     *
+     * @return Course[]
+     */
+    public function findByType($sphere, $level) {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.sphere = :sphere or c.sphere = :any')
+            ->andWhere('c.level = :level or c.level = :split')
+            ->setParameter('sphere', $sphere)
+            ->setParameter('any', 'Any')
+            ->setParameter('level', $level)
+            ->setParameter('split', 'Split')
+            ->orderBy('c.name ')
+            ->getQuery()
+            ->getResult();
+    }
 }
