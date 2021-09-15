@@ -33,7 +33,6 @@ class CourseController extends AbstractController
     {
         $sphere = ucwords($sphere);
         $level = ucwords($level);
-        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('course/index.html.twig', [
             'courses' => $courseRepository->findByType($sphere, $level),
         ]);
