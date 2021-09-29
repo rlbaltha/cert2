@@ -64,6 +64,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ;
     }
 
+    public function findByLevel($level)
+    {
+        return $this->createQueryBuilder('u')
+            ->join('u.applications','a')
+            ->andWhere('a.level = :level')
+            ->andWhere('u.progress = :progress')
+            ->setParameter('level', $level)
+            ->setParameter('progress', 'Checklist')
+            ->orderBy('u.gradyear', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     public function countByMajor()
     {

@@ -60,6 +60,19 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/{level}//findByLevel", name="user_findbylevel", methods={"GET"})
+     */
+    public function findByLevel(UserRepository $userRepository, string $level): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
+        return $this->render('user/index.html.twig', [
+            'users' => $userRepository->findByLevel($level),
+            'years' => $years
+        ]);
+    }
+
+    /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response

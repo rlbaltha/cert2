@@ -13,14 +13,19 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Students <span
-                class="text-muted">({% if app.request.get('progress') %}{{ app.request.get('progress') }}{% else %} {{ app.request.get('year') }} {{ app.request.get('term') }}{% endif %} -- {{ users|length }})</span>
+    <h1>Students
+        <span class="text-muted">({% if app.request.get('progress') %}{{ app.request.get('progress') }}
+            {{ app.request.get('year') }} {{ app.request.get('term') }}
+            {% elseif app.request.get('level') %}{{ app.request.get('level') }}{% else %}
+            {% endif %} -- {{ users|length }})</span>
     </h1>
     <div class="container">
         <div class="row">
             <div class="col-sm-8 mt-2">
-                <a class="btn btn-primary d-inline"
-                   href="{{ path('user_find', {'progress': 'Checklist'}) }}">Checklist</a>
+               <a class="btn btn-primary d-inline"
+                       href="{{ path('user_findbylevel', {'level': 'Undergrad'}) }}">Undergrad</a>
+               <a class="btn btn-primary d-inline"
+                       href="{{ path('user_findbylevel', {'level': 'Grad'}) }}">Grad</a>
                 <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Graduating'}) }}">Graduating</a>
                 <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Alumni'}) }}">Alumni</a>
                 <a class="btn btn-primary d-inline dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
@@ -28,8 +33,6 @@
                    aria-haspopup="true" aria-expanded="false">
                     By Graduation Date
                 </a>
-                <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Inactive'}) }}">Inactive</a>
-
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     {% for year in years %}
                         <a class="dropdown-item"
@@ -44,6 +47,7 @@
                     {% endfor %}
 
                 </div>
+                <a class="btn btn-primary d-inline" href="{{ path('user_find', {'progress': 'Inactive'}) }}">Inactive</a>
             </div>
             <div class="col-sm-4 mb-2"><input class="form-control d-inline" id="filter" type="text"
                                        placeholder="Filter results"></div>
