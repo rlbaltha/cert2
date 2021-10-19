@@ -79,7 +79,7 @@ class ChecklistType extends AbstractType
             ])
             ->add('capstone', EntityType::class, [
                 'class' => Course::class,
-                'choices' => $this->courseRepository->findBy(['sphere'=>'Capstone'], ['name' => 'ASC']),
+                'choices' => $this->courseRepository->findForChecklist('Capstone'),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'label'  => 'Capstone',
