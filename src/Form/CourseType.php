@@ -27,6 +27,10 @@ class CourseType extends AbstractType
                 true,
                 'expanded' => true, 'multiple' => false, 'label' => 'Level',
                 'attr' => array('class' => 'radio'),))
+            ->add('status', ChoiceType::class, array('choices' => array('Approved' => 'Approved', 'Substitution' => 'Substitution'), 'required' =>
+                true,
+                'expanded' => true, 'multiple' => false, 'label' => 'Status',
+                'attr' => array('class' => 'radio'),))
             ->add('school', EntityType::class, array('required' => true,'class' => 'App\Entity\School',
                 'choice_label' => 'name','expanded'=>false,'multiple'=>false,'label'  => 'School/College', 'attr' => array('class' =>
                     'form-control'),))
