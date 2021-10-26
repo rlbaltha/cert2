@@ -20,7 +20,7 @@ class CourseController extends AbstractController
      */
     public function index(CourseRepository $courseRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_INTERN');
         return $this->render('course/index.html.twig', [
             'courses' => $courseRepository->findAll(),
         ]);
@@ -43,7 +43,7 @@ class CourseController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_INTERN');
         $course = new Course();
         $form = $this->createForm(CourseType::class, $course);
         $form->handleRequest($request);
@@ -67,7 +67,7 @@ class CourseController extends AbstractController
      */
     public function show(Course $course): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_INTERN');
         return $this->render('course/show.html.twig', [
             'course' => $course,
         ]);
@@ -78,7 +78,7 @@ class CourseController extends AbstractController
      */
     public function edit(Request $request, Course $course): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_INTERN');
         $form = $this->createForm(CourseType::class, $course);
         $form->handleRequest($request);
 
@@ -99,7 +99,7 @@ class CourseController extends AbstractController
      */
     public function delete(Request $request, Course $course): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_INTERN');
         if ($this->isCsrfTokenValid('delete'.$course->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($course);

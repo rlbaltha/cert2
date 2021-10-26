@@ -53,10 +53,10 @@
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ path('data') }}">Data</a>
+                        <a class="dropdown-item" href="{{ path('course_index') }}">Courses</a>
                         {% if is_granted('ROLE_ADMIN') %}
                         <a class="dropdown-item" href="{{ path('school_index') }}">Schools</a>
                         <a class="dropdown-item" href="{{ path('major_index') }}">Majors</a>
-                        <a class="dropdown-item" href="{{ path('course_index') }}">Courses</a>
                         <a class="dropdown-item" href="{{ path('year_index') }}">Years</a>
                         <a class="dropdown-item" href="{{ path('card_index') }}">Cards(Emails)</a>
                             {% else %}

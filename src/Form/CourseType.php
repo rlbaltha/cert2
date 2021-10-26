@@ -16,6 +16,7 @@ class CourseType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('title')
             ->add('sphere', ChoiceType::class, array('choices' => array('Anchor' => 'Anchor','Seminar' => 'Seminar','Social' => 'Social', 'Economic'
             => 'Economic', 'Ecological' => 'Ecological', 'Capstone' => 'Capstone', 'Any' => 'Anchor or Any Pillar'),
                 'required' =>  true,

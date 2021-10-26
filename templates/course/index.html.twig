@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Course index</h1>
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_INTERN') %}
     <a class="btn btn-primary" href="{{ path('course_new') }}">Create new</a>
     {% endif %}
     <div class="dropdown d-inline">
@@ -31,10 +31,10 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Course</th>
                 <th>Sphere</th>
                 <th>Level</th>
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_INTERN') %}
                 <th>actions</th>
                 {% endif %}
             </tr>
@@ -42,10 +42,10 @@
         <tbody>
         {% for course in courses %}
             <tr>
-                <td>{{ course.name }}</td>
+                <td>{{ course.name }}{% if course.title!=''%}: {{ course.title }}{% endif %}</td>
                 <td>{{ course.sphere }}</td>
                 <td>{{ course.level }}</td>
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_INTERN') %}
                 <td>
                     <a href="{{ path('course_edit', {'id': course.id}) }}">edit</a>
                 </td>
