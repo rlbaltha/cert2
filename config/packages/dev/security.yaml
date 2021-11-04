@@ -40,7 +40,7 @@ security:
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/user, roles: ROLE_USER }
-         - { path: ^/school, roles: ROLE_ADMIN }
+         - { path: ^/school, roles: ROLE_INTERN }
          - { path: ^/year, roles: ROLE_ADMIN }
          - { path: ^/application, roles: ROLE_USER }
          - { path: ^/checklist, roles: ROLE_USER }
