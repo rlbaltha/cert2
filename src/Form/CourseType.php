@@ -18,7 +18,7 @@ class CourseType extends AbstractType
             ->add('name')
             ->add('title')
             ->add('sphere', ChoiceType::class, array('choices' => array('Anchor' => 'Anchor','Seminar' => 'Seminar','Social' => 'Social', 'Economic'
-            => 'Economic', 'Ecological' => 'Ecological', 'Capstone' => 'Capstone', 'Any' => 'Anchor or Any Pillar'),
+            => 'Economic', 'Ecological' => 'Ecological', 'Capstone' => 'Capstone', 'Anchor or Any Pillar' => 'Any'),
                 'required' =>  true,
                 'expanded' => true,
                 'multiple' => false,
