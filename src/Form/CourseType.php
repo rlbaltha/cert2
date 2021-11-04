@@ -32,9 +32,9 @@ class CourseType extends AbstractType
                 true,
                 'expanded' => true, 'multiple' => false, 'label' => 'Status',
                 'attr' => array('class' => 'radio'),))
-            ->add('school', EntityType::class, array('required' => true,'class' => 'App\Entity\School',
-                'choice_label' => 'name','expanded'=>false,'multiple'=>false,'label'  => 'School/College', 'attr' => array('class' =>
-                    'form-control'),))
+            ->add('schools', EntityType::class, array('required' => true,'class' => 'App\Entity\School',
+                'choice_label' => 'name','expanded'=>true,'multiple'=>true,'label'  => 'School/College', 'attr' => array('class' =>
+                    'form-check form-check-inline'),))
         ;
     }
 

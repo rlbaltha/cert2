@@ -79,6 +79,11 @@ class Course
      */
     private $title;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=School::class, inversedBy="coursesm2m")
+     */
+    private $schools;
+
 
     public function __construct()
     {
@@ -88,6 +93,7 @@ class Course
         $this->sphere3_courses = new ArrayCollection();
         $this->seminars = new ArrayCollection();
         $this->capstones = new ArrayCollection();
+        $this->schools = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -343,6 +349,30 @@ class Course
     public function setTitle(?string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|School[]
+     */
+    public function getSchools(): Collection
+    {
+        return $this->schools;
+    }
+
+    public function addSchool(School $school): self
+    {
+        if (!$this->schools->contains($school)) {
+            $this->schools[] = $school;
+        }
+
+        return $this;
+    }
+
+    public function removeSchool(School $school): self
+    {
+        $this->schools->removeElement($school);
 
         return $this;
     }

@@ -29,10 +29,16 @@ class School
      */
     private $courses;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Course::class, mappedBy="schools")
+     */
+    private $coursesm2m;
+
 
     public function __construct()
     {
         $this->courses = new ArrayCollection();
+        $this->coursesm2m = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,6 +83,33 @@ class School
             if ($course->getSchool() === $this) {
                 $course->setSchool(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Course[]
+     */
+    public function getCoursesm2m(): Collection
+    {
+        return $this->coursesm2m;
+    }
+
+    public function addCoursesm2m(Course $coursesm2m): self
+    {
+        if (!$this->coursesm2m->contains($coursesm2m)) {
+            $this->coursesm2m[] = $coursesm2m;
+            $coursesm2m->addSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCoursesm2m(Course $coursesm2m): self
+    {
+        if ($this->coursesm2m->removeElement($coursesm2m)) {
+            $coursesm2m->removeSchool($this);
         }
 
         return $this;
