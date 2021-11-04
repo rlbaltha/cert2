@@ -26,15 +26,29 @@ class CourseRepository extends ServiceEntityRepository
      * @return Course[]
      */
     public function findForChecklist($sphere) {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.sphere = :sphere or c.sphere = :any')
-            ->andWhere('c.status = :status')
-            ->setParameter('sphere', $sphere)
-            ->setParameter('any', 'Any')
-            ->setParameter('status', 'Approved')
-            ->orderBy('c.name ')
-            ->getQuery()
-            ->getResult();
+        if ($sphere == 'Seminar' or $sphere == 'Capstone')
+        {
+            return $this->createQueryBuilder('c')
+                ->andWhere('c.sphere = :sphere')
+                ->andWhere('c.status = :status')
+                ->setParameter('sphere', $sphere)
+                ->setParameter('status', 'Approved')
+                ->orderBy('c.name ')
+                ->getQuery()
+                ->getResult();
+        }
+        else {
+            return $this->createQueryBuilder('c')
+                ->andWhere('c.sphere = :sphere or c.sphere = :any')
+                ->andWhere('c.status = :status')
+                ->setParameter('sphere', $sphere)
+                ->setParameter('any', 'Any')
+                ->setParameter('status', 'Approved')
+                ->orderBy('c.name ')
+                ->getQuery()
+                ->getResult();
+        }
+
     }
 
     /**
@@ -43,17 +57,32 @@ class CourseRepository extends ServiceEntityRepository
      * @return Course[]
      */
     public function findByType($sphere, $level) {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.sphere = :sphere or c.sphere = :any')
-            ->andWhere('c.level = :level or c.level = :split')
-            ->andWhere('c.status = :status')
-            ->setParameter('sphere', $sphere)
-            ->setParameter('any', 'Any')
-            ->setParameter('level', $level)
-            ->setParameter('split', 'Split')
-            ->setParameter('status', 'Approved')
-            ->orderBy('c.name ')
-            ->getQuery()
-            ->getResult();
+        if ($sphere == 'Seminar' or $sphere == 'Capstone') {
+            return $this->createQueryBuilder('c')
+                ->andWhere('c.sphere = :sphere')
+                ->andWhere('c.level = :level or c.level = :split')
+                ->andWhere('c.status = :status')
+                ->setParameter('sphere', $sphere)
+                ->setParameter('level', $level)
+                ->setParameter('split', 'Split')
+                ->setParameter('status', 'Approved')
+                ->orderBy('c.name ')
+                ->getQuery()
+                ->getResult();
+        }
+        else {
+            return $this->createQueryBuilder('c')
+                ->andWhere('c.sphere = :sphere or c.sphere = :any')
+                ->andWhere('c.level = :level or c.level = :split')
+                ->andWhere('c.status = :status')
+                ->setParameter('sphere', $sphere)
+                ->setParameter('any', 'Any')
+                ->setParameter('level', $level)
+                ->setParameter('split', 'Split')
+                ->setParameter('status', 'Approved')
+                ->orderBy('c.name ')
+                ->getQuery()
+                ->getResult();
+        }
     }
 }
