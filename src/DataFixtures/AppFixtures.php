@@ -6,22 +6,22 @@ use App\Entity\User;
 use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
-    private $passwordEncoder;
+    private $passwordHasher;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
-        $this->passwordEncoder = $passwordEncoder;
+        $this->passwordHasher = $passwordHasher;
     }
 
     public function load(ObjectManager $manager)
     {
         $user = new User();
         $user->setUsername('admin');
-        $user->setPassword($this->passwordEncoder->encodePassword($user, 'adminpw'));
+        $user->setPassword($this->passwordHasher->hashPassword($user, 'adminpw'));
         $user->setFirstName('Ima');
         $user->setLastName('Administrator');
         $user->setRoles(['ROLE_USER','ROLE_ADMIN','ROLE_ALLOWED_TO_SWITCH']);

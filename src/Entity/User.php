@@ -6,13 +6,16 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="cert_user")
  */
-class User implements UserInterface
+
+class User implements UserInterface, EquatableInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -122,6 +125,21 @@ class User implements UserInterface
     {
         $this->checklists = new ArrayCollection();
         $this->applications = new ArrayCollection();
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->username;
+    }
+
+    public function isEqualTo(UserInterface $user): ?bool
+    {
+        return true;
     }
 
     public function getId(): ?int
