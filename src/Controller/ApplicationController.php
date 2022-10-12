@@ -6,11 +6,11 @@ use App\Entity\Application;
 use App\Form\ApplicationType;
 use App\Repository\ApplicationRepository;
 use App\Service\Emailer;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use App\Entity\User;
+use App\Entity\Year;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -24,7 +24,7 @@ class ApplicationController extends AbstractController
     public function index(ApplicationRepository $applicationRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
+        $years = $this->getDoctrine()->getManager()->getRepository(Year::class)->findAllDesc();
         return $this->render('application/index.html.twig', [
             'applications' => $applicationRepository->findAll(),
             'status' => 'All',
@@ -39,7 +39,7 @@ class ApplicationController extends AbstractController
     public function find(ApplicationRepository $applicationRepository, string $status): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
+        $years = $this->getDoctrine()->getManager()->getRepository(Year::class)->findAll();
         if ($status == 'All') {
             return $this->render('application/index.html.twig', [
                 'applications' => $applicationRepository->findAll(),
@@ -63,7 +63,7 @@ class ApplicationController extends AbstractController
     public function new(Request $request, Emailer $emailer): Response
     {
         $username = $this->getUser()->getUsername();
-        $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)->findOneByUsername($username);
         $application = new Application();
         $application->setUser($user);
         $form = $this->createForm(ApplicationType::class, $application);
@@ -94,7 +94,7 @@ class ApplicationController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $username = $application->getUser()->getUsername();
-        $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)->findOneByUsername($username);
         $user->setProgress('Checklist');
         $portfolio = 'https://ctlsites.uga.edu/sustainability-' . $user->getFirstName() . $user->getLastName();
         $user->setPortfolio(strtolower($portfolio));

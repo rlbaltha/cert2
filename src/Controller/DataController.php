@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\User;
+use App\Entity\Checklist;
 
 class DataController extends AbstractController
 {
@@ -14,16 +16,16 @@ class DataController extends AbstractController
     public function index(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_INTERN');
-        $countByMajor = $this->getDoctrine()->getManager()->getRepository('App:User')->countByMajor();
-        $countBySchool = $this->getDoctrine()->getManager()->getRepository('App:User')->countBySchool();
-        $countByProgress = $this->getDoctrine()->getManager()->getRepository('App:User')->countByProgress();
-        $countByGrad = $this->getDoctrine()->getManager()->getRepository('App:User')->countByGrad();
+        $countByMajor = $this->getDoctrine()->getManager()->getRepository(User::class)->countByMajor();
+        $countBySchool = $this->getDoctrine()->getManager()->getRepository(User::class)->countBySchool();
+        $countByProgress = $this->getDoctrine()->getManager()->getRepository(User::class)->countByProgress();
+        $countByGrad = $this->getDoctrine()->getManager()->getRepository(User::class)->countByGrad();
 
-        $countByAnchor = $this->getDoctrine()->getManager()->getRepository('App:Checklist')->countByAnchor();
-        $countBySphere1 = $this->getDoctrine()->getManager()->getRepository('App:Checklist')->countBySphere1();
-        $countBySphere2 = $this->getDoctrine()->getManager()->getRepository('App:Checklist')->countBySphere2();
-        $countBySphere3 = $this->getDoctrine()->getManager()->getRepository('App:Checklist')->countBySphere3();
-        $countBySeminar = $this->getDoctrine()->getManager()->getRepository('App:Checklist')->countBySeminar();
+        $countByAnchor = $this->getDoctrine()->getManager()->getRepository(Checklist::class)->countByAnchor();
+        $countBySphere1 = $this->getDoctrine()->getManager()->getRepository(Checklist::class)->countBySphere1();
+        $countBySphere2 = $this->getDoctrine()->getManager()->getRepository(Checklist::class)->countBySphere2();
+        $countBySphere3 = $this->getDoctrine()->getManager()->getRepository(Checklist::class)->countBySphere3();
+        $countBySeminar = $this->getDoctrine()->getManager()->getRepository(Checklist::class)->countBySeminar();
 
 
         return $this->render('data/index.html.twig', [

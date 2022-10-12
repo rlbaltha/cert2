@@ -92,7 +92,7 @@ use Symfony\Component\Security\Core\Security;class UpdatePasswordCommand extends
     public function changePassword($username, $password)
     {
         $em = $this->container->get('doctrine')->getManager();
-        $user = $em->getRepository('App:User')->findOneByUsername($username);
+        $user = $em->getRepository(User::class)->findOneByUsername($username);
         if (!$user) {
             throw new \InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
         }

@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Year;
 use App\Form\ProfileType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Service\Emailer;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +26,7 @@ class UserController extends AbstractController
     public function index(UserRepository $userRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
+        $years = $this->getDoctrine()->getManager()->getRepository(Year::class)->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
             'years' => $years
@@ -39,7 +39,7 @@ class UserController extends AbstractController
     public function find(UserRepository $userRepository, string $progress): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
+        $years = $this->getDoctrine()->getManager()->getRepository(Year::class)->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findBy(['progress' => $progress], ['gradyear' => 'DESC']),
             'years' => $years
@@ -52,7 +52,7 @@ class UserController extends AbstractController
     public function findByDate(UserRepository $userRepository, string $year, string $term): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
+        $years = $this->getDoctrine()->getManager()->getRepository(Year::class)->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findByDate($year, $term),
             'years' => $years
@@ -65,7 +65,7 @@ class UserController extends AbstractController
     public function findByLevel(UserRepository $userRepository, string $level): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
+        $years = $this->getDoctrine()->getManager()->getRepository(Year::class)->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findByLevel($level),
             'years' => $years
@@ -102,7 +102,7 @@ class UserController extends AbstractController
     public function profile(): Response
     {
         $username = $this->getUser()->getUsername();
-        $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)->findOneByUsername($username);
 
         if ($user->getLastName() == null) {
             return $this->redirectToRoute('user_profile_edit', ['id' => $user->getId()]);
@@ -212,7 +212,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $username = $user->getUsername();
-            $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+            $user = $this->getDoctrine()->getManager()->getRepository(User::class)->findOneByUsername($username);
 
             $emailer->sendEmail('edit_profile', $user, $user->getEmail());
 

@@ -42,7 +42,7 @@ class ChecklistController extends AbstractController
     public function new(Request $request): Response
     {
         $username = $this->getUser()->getUsername();
-        $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)->findOneByUsername($username);
 
         $checklist = new Checklist();
         $checklist->setUser($user);
