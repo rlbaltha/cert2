@@ -98,7 +98,7 @@ class UpdatePasswordCommand extends Command
     public function changePassword($username, $password)
     {
         $em = $this->doctrine->getManager();
-        $user = $em->getRepository('App:User')->findOneByUsername($username);
+        $user = $em->getRepository(User::class)->findOneByUsername($username);
         if (!$user) {
             throw new \InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
         }

@@ -3,14 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Checklist;
+use App\Entity\User;
 use App\Form\ChecklistType;
 use App\Repository\ChecklistRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-
 
 
 /**
@@ -18,12 +20,17 @@ use Symfony\Component\Security\Core\Security;
  */
 class ChecklistController extends AbstractController
 {
+    /** @var ManagerRegistry */
+    private ManagerRegistry $doctrine;
 
     private $security;
 
-    public function __construct(Security $security) {
+    public function __construct(ManagerRegistry $doctrine, Security $security)
+    {
+        $this->doctrine = $doctrine;
         $this->security = $security;
     }
+
 
     /**
      * @Route("/", name="checklist_index", methods={"GET"})
@@ -42,7 +49,7 @@ class ChecklistController extends AbstractController
     public function new(Request $request): Response
     {
         $username = $this->getUser()->getUsername();
-        $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+        $user = $this->doctrine->getManager()->getRepository(User::class)->findOneByUsername($username);
 
         $checklist = new Checklist();
         $checklist->setUser($user);
@@ -52,7 +59,7 @@ class ChecklistController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $checklist->setUser($user);
             $user->setProgress('Checklist');
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->persist($checklist);
             $entityManager->persist($user);
             $entityManager->flush();
@@ -86,7 +93,7 @@ class ChecklistController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->doctrine->getManager()->flush();
 
             if ($this->security->isGranted('ROLE_ADMIN')) {
                 return $this->redirectToRoute('user_show', ['id' => $checklist->getUser()->getId()]);
@@ -110,7 +117,7 @@ class ChecklistController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$checklist->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->remove($checklist);
             $entityManager->flush();
         }

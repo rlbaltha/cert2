@@ -2,16 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Checklist;
 use App\Entity\Substitution;
 use App\Form\SubstitutionType;
 use App\Repository\SubstitutionRepository;
-use App\Repository\UserRepository;
 use App\Service\Emailer;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -19,6 +18,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SubstitutionController extends AbstractController
 {
+    /** @var ManagerRegistry */
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+    
     /**
      * @Route("/", name="substitution_index", methods={"GET"})
      */
@@ -45,14 +52,14 @@ class SubstitutionController extends AbstractController
      */
     public function new(Request $request, string $checklist_id): Response
     {
-        $checklist = $this->getDoctrine()->getManager()->getRepository('App:Checklist')->find($checklist_id);
+        $checklist = $this->doctrine->getManager()->getRepository(Checklist::class)->find($checklist_id);
         $substitution = new Substitution();
         $substitution->setChecklist($checklist);
         $form = $this->createForm(SubstitutionType::class, $substitution);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->persist($substitution);
             $entityManager->flush();
 
@@ -82,10 +89,10 @@ class SubstitutionController extends AbstractController
     public function approve(String $id, Emailer $emailer): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $substitution = $this->getDoctrine()->getManager()->getRepository('App:Substitution')->find($id);
+        $substitution = $this->doctrine->getManager()->getRepository(Substitution::class)->find($id);
         $substitution->setStatus('Approved');
-        $this->getDoctrine()->getManager()->persist($substitution);
-        $this->getDoctrine()->getManager()->flush();
+        $this->doctrine->getManager()->persist($substitution);
+        $this->doctrine->getManager()->flush();
         $user = $substitution->getChecklist()->getUser();
         $emailer->sendEmail('substitution_approve', $user, $user->getEmail());
 
@@ -101,10 +108,10 @@ class SubstitutionController extends AbstractController
     public function deny(String $id, Emailer $emailer): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $substitution = $this->getDoctrine()->getManager()->getRepository('App:Substitution')->find($id);
+        $substitution = $this->doctrine->getManager()->getRepository(Substitution::class)->find($id);
         $substitution->setStatus('Denied');
-        $this->getDoctrine()->getManager()->persist($substitution);
-        $this->getDoctrine()->getManager()->flush();
+        $this->doctrine->getManager()->persist($substitution);
+        $this->doctrine->getManager()->flush();
         $user = $substitution->getChecklist()->getUser();
         $emailer->sendEmail('substitution_deny', $user, $user->getEmail());
 
@@ -123,7 +130,7 @@ class SubstitutionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->doctrine->getManager()->flush();
 
             return $this->redirectToRoute('substitution_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -141,7 +148,7 @@ class SubstitutionController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$substitution->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->remove($substitution);
             $entityManager->flush();
         }

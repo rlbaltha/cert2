@@ -6,11 +6,12 @@ use App\Entity\Application;
 use App\Form\ApplicationType;
 use App\Repository\ApplicationRepository;
 use App\Service\Emailer;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use App\Entity\User;
+use App\Entity\Year;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -18,13 +19,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ApplicationController extends AbstractController
 {
+    /** @var ManagerRegistry */
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+    
     /**
      * @Route("/", name="application_index", methods={"GET"})
      */
     public function index(ApplicationRepository $applicationRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
+        $years = $this->doctrine->getManager()->getRepository(Year::class)->findAllDesc();
         return $this->render('application/index.html.twig', [
             'applications' => $applicationRepository->findAll(),
             'status' => 'All',
@@ -39,7 +48,7 @@ class ApplicationController extends AbstractController
     public function find(ApplicationRepository $applicationRepository, string $status): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAll();
+        $years = $this->doctrine->getManager()->getRepository(Year::class)->findAll();
         if ($status == 'All') {
             return $this->render('application/index.html.twig', [
                 'applications' => $applicationRepository->findAll(),
@@ -63,7 +72,7 @@ class ApplicationController extends AbstractController
     public function new(Request $request, Emailer $emailer): Response
     {
         $username = $this->getUser()->getUsername();
-        $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+        $user = $this->doctrine->getManager()->getRepository(User::class)->findOneByUsername($username);
         $application = new Application();
         $application->setUser($user);
         $form = $this->createForm(ApplicationType::class, $application);
@@ -71,7 +80,7 @@ class ApplicationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $application->setUser($user);
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->persist($application);
             $entityManager->flush();
 
@@ -94,20 +103,20 @@ class ApplicationController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $username = $application->getUser()->getUsername();
-        $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+        $user = $this->doctrine->getManager()->getRepository(User::class)->findOneByUsername($username);
         $user->setProgress('Checklist');
         $portfolio = 'https://ctlsites.uga.edu/sustainability-' . $user->getFirstName() . $user->getLastName();
         $user->setPortfolio(strtolower($portfolio));
         $application->setStatus('Approved');
-        $this->getDoctrine()->getManager()->persist($user);
-        $this->getDoctrine()->getManager()->persist($application);
-        $this->getDoctrine()->getManager()->flush();
+        $this->doctrine->getManager()->persist($user);
+        $this->doctrine->getManager()->persist($application);
+        $this->doctrine->getManager()->flush();
 
         $emailer->sendEmail('application_approve', $user, $user->getEmail());
 
-        $emailer->sendEmail('create_portfolio', $user, 'ameya.sawadkar@uga.edu');
+//        $emailer->sendEmail('create_portfolio', $user, 'christopher.pfeifer@uga.edu');
 
-        $message = 'The application was approved, the student was sent an email, and an email was sent requesting the creation of a portfolio.';
+        $message = 'The application was approved and the student was sent an email';
         $this->addFlash('notice', $message);
 
         return $this->redirectToRoute('user_show', ['id' => $application->getUser()->getId()]);
@@ -122,7 +131,7 @@ class ApplicationController extends AbstractController
         $form->handleRequest($request);
         $user = $application->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->doctrine->getManager()->flush();
 
             $emailer->sendEmail('application', $user, 'scdirector@uga.edu');
             return $this->redirectToRoute('user_show', ['id' => $application->getUser()->getId()]);
@@ -141,7 +150,7 @@ class ApplicationController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$application->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->remove($application);
             $entityManager->flush();
         }

@@ -17,7 +17,9 @@ class AppFixtures extends Fixture
         $this->passwordHasher = $passwordHasher;
     }
 
-    public function load(ObjectManager $manager)
+
+    public function load(ObjectManager $manager): void
+
     {
         $user = new User();
         $user->setUsername('admin');

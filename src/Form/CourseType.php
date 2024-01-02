@@ -28,7 +28,7 @@ class CourseType extends AbstractType
                 true,
                 'expanded' => true, 'multiple' => false, 'label' => 'Level',
                 'attr' => array('class' => 'radio'),))
-            ->add('status', ChoiceType::class, array('choices' => array('Approved' => 'Approved', 'Substitution' => 'Substitution'), 'required' =>
+            ->add('status', ChoiceType::class, array('choices' => array('Approved' => 'Approved', 'Substitution' => 'Substitution', 'Archive' => 'Archive'), 'required' =>
                 true,
                 'expanded' => true, 'multiple' => false, 'label' => 'Status',
                 'attr' => array('class' => 'radio'),))

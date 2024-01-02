@@ -32,7 +32,7 @@ class CertUserProvider extends CasUserProvider implements UserProviderInterface
             $password = random_int(1, 16);
             $length = strlen($username);
             $init = substr($username, 0, 1);
-            $user = $this->entityManager->getRepository('App:User')->findOneByUsername($username);
+            $user = $this->entityManager->getRepository(User::class)->findOneByUsername($username);
 //          if user exits or is loginas else create new user
             if ($user || ($init=='_' && $length > 20)) {
                 return $user;

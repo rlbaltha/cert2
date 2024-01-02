@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Service;
+
+use App\Entity\Card;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -18,7 +20,7 @@ class Emailer
 
     public function sendEmail(string $application, User $user, string $toAddress)
     {
-        $card = $this->entityManager->getRepository('App:Card')->findOneBy(['application'=>$application]);
+        $card = $this->entityManager->getRepository(Card::class)->findOneBy(['application'=>$application]);
         $email = (new TemplatedEmail())
             ->from('scdirector@uga.edu')
             ->to($toAddress)

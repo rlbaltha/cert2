@@ -3,30 +3,39 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Year;
 use App\Form\ProfileType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Service\Emailer;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Mime\Email;
 
 /**
  * @Route("/user")
  */
 class UserController extends AbstractController
 {
+    /** @var ManagerRegistry */
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+    
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
+        $years = $this->doctrine->getManager()->getRepository(Year::class)->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
             'years' => $years
@@ -39,7 +48,7 @@ class UserController extends AbstractController
     public function find(UserRepository $userRepository, string $progress): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
+        $years = $this->doctrine->getManager()->getRepository(Year::class)->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findBy(['progress' => $progress], ['gradyear' => 'DESC']),
             'years' => $years
@@ -52,7 +61,7 @@ class UserController extends AbstractController
     public function findByDate(UserRepository $userRepository, string $year, string $term): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
+        $years = $this->doctrine->getManager()->getRepository(Year::class)->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findByDate($year, $term),
             'years' => $years
@@ -65,7 +74,7 @@ class UserController extends AbstractController
     public function findByLevel(UserRepository $userRepository, string $level): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $years = $this->getDoctrine()->getManager()->getRepository('App:Year')->findAllDesc();
+        $years = $this->doctrine->getManager()->getRepository(Year::class)->findAllDesc();
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findByLevel($level),
             'years' => $years
@@ -83,7 +92,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -102,7 +111,7 @@ class UserController extends AbstractController
     public function profile(): Response
     {
         $username = $this->getUser()->getUsername();
-        $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+        $user = $this->doctrine->getManager()->getRepository(User::class)->findOneByUsername($username);
 
         if ($user->getLastName() == null) {
             return $this->redirectToRoute('user_profile_edit', ['id' => $user->getId()]);
@@ -119,8 +128,8 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $user->setProgress('Inactive');
-        $this->getDoctrine()->getManager()->persist($user);
-        $this->getDoctrine()->getManager()->flush();
+        $this->doctrine->getManager()->persist($user);
+        $this->doctrine->getManager()->flush();
 
         $emailer->sendEmail('inactive', $user, $user->getEmail());
 
@@ -139,8 +148,8 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $user->setProgress('Alumni');
-        $this->getDoctrine()->getManager()->persist($user);
-        $this->getDoctrine()->getManager()->flush();
+        $this->doctrine->getManager()->persist($user);
+        $this->doctrine->getManager()->flush();
 
         $emailer->sendEmail('alumni', $user, $user->getEmail());
 
@@ -159,8 +168,8 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $user->setProgress('Graduating');
-        $this->getDoctrine()->getManager()->persist($user);
-        $this->getDoctrine()->getManager()->flush();
+        $this->doctrine->getManager()->persist($user);
+        $this->doctrine->getManager()->flush();
 
         $message = 'The student was listed as graduating.';
         $this->addFlash('notice', $message);
@@ -191,7 +200,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->doctrine->getManager()->flush();
             return $this->redirectToRoute('profile');
         }
 
@@ -210,9 +219,9 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->doctrine->getManager()->flush();
             $username = $user->getUsername();
-            $user = $this->getDoctrine()->getManager()->getRepository('App:User')->findOneByUsername($username);
+            $user = $this->doctrine->getManager()->getRepository(User::class)->findOneByUsername($username);
 
             $emailer->sendEmail('edit_profile', $user, $user->getEmail());
 
@@ -232,7 +241,7 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
         }

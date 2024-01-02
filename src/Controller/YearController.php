@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Year;
 use App\Form\YearType;
 use App\Repository\YearRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class YearController extends AbstractController
 {
+    /** @var ManagerRegistry */
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+    
     /**
      * @Route("/", name="year_index", methods={"GET"})
      */
@@ -35,7 +44,7 @@ class YearController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->persist($year);
             $entityManager->flush();
 
@@ -67,7 +76,7 @@ class YearController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->doctrine->getManager()->flush();
 
             return $this->redirectToRoute('year_index');
         }
@@ -84,7 +93,7 @@ class YearController extends AbstractController
     public function delete(Request $request, Year $year): Response
     {
         if ($this->isCsrfTokenValid('delete'.$year->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->remove($year);
             $entityManager->flush();
         }

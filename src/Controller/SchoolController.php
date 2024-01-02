@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\School;
 use App\Form\SchoolType;
 use App\Repository\SchoolRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SchoolController extends AbstractController
 {
+    /** @var ManagerRegistry */
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+    
     /**
      * @Route("/", name="school_index", methods={"GET"})
      */
@@ -35,7 +44,7 @@ class SchoolController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->persist($school);
             $entityManager->flush();
 
@@ -67,7 +76,7 @@ class SchoolController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->doctrine->getManager()->flush();
 
             return $this->redirectToRoute('school_index');
         }
@@ -84,7 +93,7 @@ class SchoolController extends AbstractController
     public function delete(Request $request, School $school): Response
     {
         if ($this->isCsrfTokenValid('delete'.$school->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->remove($school);
             $entityManager->flush();
         }
