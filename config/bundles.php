@@ -16,5 +16,4 @@ return [
     Zenstruck\Foundry\ZenstruckFoundryBundle::class => ['dev' => true, 'test' => true],
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
     PRayno\CasAuthBundle\PRaynoCasAuthBundle::class => ['all' => true],
-    FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
 ];

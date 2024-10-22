@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Card;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,8 +21,7 @@ class CardType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => 'Title (Subject)',
             ])
-            ->add('body', CKEditorType::class, [
-                'config_name' => 'editor_simple',
+            ->add('body', TextareaType::class, [
                 'label' => 'Body (Email Content)',
             ])
         ;

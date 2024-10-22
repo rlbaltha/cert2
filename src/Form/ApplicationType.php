@@ -3,12 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Application;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ApplicationType extends AbstractType
 {
@@ -27,16 +27,13 @@ class ApplicationType extends AbstractType
                 ],
                 'expanded'=> true,
             ])
-            ->add('interest', CKEditorType::class, [
-                'config_name' => 'editor_simple',
+            ->add('interest', TextareaType::class, [
                 'label' => 'What is your interest in Sustainability',
             ])
-            ->add('experience', CKEditorType::class, [
-                'config_name' => 'editor_simple',
+            ->add('experience', TextareaType::class, [
                 'label' => 'What is your experience with Sustainability?',
             ])
-            ->add('goals', CKEditorType::class, [
-                'config_name' => 'editor_simple',
+            ->add('goals', TextareaType::class, [
                 'label' => 'What are your goals?',
             ])
             ->add('status', ChoiceType::class, [
