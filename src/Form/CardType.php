@@ -23,8 +23,7 @@ class CardType extends AbstractType
             ])
             ->add('body', TextareaType::class, [
                 'label' => 'Body (Email Content)',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

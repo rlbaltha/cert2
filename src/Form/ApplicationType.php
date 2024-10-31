@@ -21,11 +21,11 @@ class ApplicationType extends AbstractType
                     'placeholder' => '811000000']
             ])
             ->add('level', ChoiceType::class, [
-                'choices'  => [
+                'choices' => [
                     'Undergrad' => 'Undergrad',
                     'Grad' => 'Grad'
                 ],
-                'expanded'=> true,
+                'expanded' => true,
             ])
             ->add('interest', TextareaType::class, [
                 'label' => 'What is your interest in Sustainability',
@@ -37,13 +37,12 @@ class ApplicationType extends AbstractType
                 'label' => 'What are your goals?',
             ])
             ->add('status', ChoiceType::class, [
-                'choices'  => [
+                'choices' => [
                     'Still Editing' => 'Still Editing',
                     'Ready for Review' => 'Ready for Review'
                 ],
-                'expanded'=> true,
-            ])
-        ;
+                'expanded' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
