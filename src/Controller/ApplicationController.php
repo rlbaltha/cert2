@@ -84,7 +84,7 @@ class ApplicationController extends AbstractController
             $entityManager->persist($application);
             $entityManager->flush();
 
-            $emailer->sendEmail('application', $user, 'scdirector@uga.edu');
+//            $emailer->sendEmail('application', $user, 'scdirector@uga.edu');
 
             return $this->redirectToRoute('user_show', ['id' => $application->getUser()->getId()]);
         }
@@ -112,7 +112,7 @@ class ApplicationController extends AbstractController
         $this->doctrine->getManager()->persist($application);
         $this->doctrine->getManager()->flush();
 
-        $emailer->sendEmail('application_approve', $user, $user->getEmail());
+//        $emailer->sendEmail('application_approve', $user, $user->getEmail());
 
 //        $emailer->sendEmail('create_portfolio', $user, 'christopher.pfeifer@uga.edu');
 
@@ -133,7 +133,7 @@ class ApplicationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->doctrine->getManager()->flush();
 
-            $emailer->sendEmail('application', $user, 'scdirector@uga.edu');
+//            $emailer->sendEmail('application', $user, 'scdirector@uga.edu');
             return $this->redirectToRoute('user_show', ['id' => $application->getUser()->getId()]);
         }
 
