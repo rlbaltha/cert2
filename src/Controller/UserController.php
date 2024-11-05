@@ -131,7 +131,7 @@ class UserController extends AbstractController
         $this->doctrine->getManager()->persist($user);
         $this->doctrine->getManager()->flush();
 
-//        $emailer->sendEmail('inactive', $user, $user->getEmail());
+        $emailer->sendEmail('inactive', $user, $user->getEmail());
 
         $message = 'The student was marked Inactive and sent an email.';
         $this->addFlash('notice', $message);
@@ -151,7 +151,7 @@ class UserController extends AbstractController
         $this->doctrine->getManager()->persist($user);
         $this->doctrine->getManager()->flush();
 
-//        $emailer->sendEmail('alumni', $user, $user->getEmail());
+        $emailer->sendEmail('alumni', $user, $user->getEmail());
 
         $message = 'The student was marked Alumni and sent an email.';
         $this->addFlash('notice', $message);
@@ -223,7 +223,7 @@ class UserController extends AbstractController
             $username = $user->getUsername();
             $user = $this->doctrine->getManager()->getRepository(User::class)->findOneByUsername($username);
 
-//            $emailer->sendEmail('edit_profile', $user, $user->getEmail());
+            $emailer->sendEmail('edit_profile', $user, $user->getEmail());
 
             return $this->redirectToRoute('profile');
         }
