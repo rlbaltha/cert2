@@ -96,4 +96,13 @@ class CourseRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function groupBySphere()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.name ')
+            ->groupBy('c.sphere')
+            ->getQuery()
+            ->getResult();
+    }
 }

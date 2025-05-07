@@ -45,7 +45,6 @@ class DataController extends AbstractController
 
 
 
-
         return $this->render('data/index.html.twig', [
             'countByMajor' => $countByMajor,
             'countBySchool' => $countBySchool,
@@ -61,6 +60,7 @@ class DataController extends AbstractController
             'sphere2' => $sphere2,
             'sphere3' => $sphere3,
             'seminar' => $seminar,
+
         ]);
     }
 }
