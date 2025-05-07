@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Course;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -84,5 +85,15 @@ class CourseRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
         }
+    }
+
+    public function findBySphere($sphere)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.sphere = :val')
+            ->setParameter('val', $sphere)
+            ->orderBy('c.name ')
+            ->getQuery()
+            ->getResult();
     }
 }
