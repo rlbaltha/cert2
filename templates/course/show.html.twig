@@ -26,7 +26,35 @@
         </tbody>
     </table>
 
+    {% if is_granted('ROLE_ADMIN') %}
+    <h2 class="smaller">Use in Checklists:</h2>
 
+Anchor:<br/>
+    {% for course in course.anchorCourses %}
+        <a href="{{ path('user_show', {'id': course.user.id}) }}">{{ course.user.firstName }} {{ course.user.lastName }}</a><br/>
+    {% endfor %}
+    <hr/>
+
+Ecological:<br/>
+    {% for course in course.sphere3Courses %}
+        <a href="{{ path('user_show', {'id': course.user.id}) }}">{{ course.user.firstName }} {{ course.user.lastName }}</a><br/>
+    {% endfor %}
+    <hr/>
+Economic: <br/>
+    {% for course in course.sphere2Courses %}
+        <a href="{{ path('user_show', {'id': course.user.id}) }}">{{ course.user.firstName }} {{ course.user.lastName }}</a><br/>
+    {% endfor %}
+    <hr/>
+Social: <br/>
+    {% for course in course.sphere1Courses %}
+        <a href="{{ path('user_show', {'id': course.user.id}) }}">{{ course.user.firstName }} {{ course.user.lastName }}</a><br/>
+    {% endfor %}
+    <hr/>
+Seminar: <br/>
+    {% for course in course.seminars %}
+        <a href="{{ path('user_show', {'id': course.user.id}) }}">{{ course.user.firstName }} {{ course.user.lastName }}</a><br/>
+    {% endfor %}
+    {% endif %}
 
 
 {% endblock %}
