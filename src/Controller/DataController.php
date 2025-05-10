@@ -30,17 +30,17 @@ class DataController extends AbstractController
         $countByProgress = $this->doctrine->getManager()->getRepository(User::class)->countByProgress();
         $countByGrad = $this->doctrine->getManager()->getRepository(User::class)->countByGrad();
 
-//        $countByAnchor = $this->doctrine->getManager()->getRepository(Checklist::class)->countByAnchor();
-//        $countBySphere1 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere1();
-//        $countBySphere2 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere2();
-//        $countBySphere3 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere3();
-//        $countBySeminar = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySeminar();
+        $anchor = $this->doctrine->getManager()->getRepository(Checklist::class)->countByAnchor();
+        $sphere1 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere1();
+        $sphere2 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere2();
+        $sphere3 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere3();
+        $seminar = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySeminar();
 
-        $anchor = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('anchor');
-        $sphere1 = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('ecological');
-        $sphere2 = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('economic');
-        $sphere3 = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('social');
-        $seminar = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('seminar');
+//        $anchor = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('anchor');
+//        $sphere1 = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('ecological');
+//        $sphere2 = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('economic');
+//        $sphere3 = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('social');
+//        $seminar = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('seminar');
 
 
 

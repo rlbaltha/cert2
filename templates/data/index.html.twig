@@ -40,35 +40,68 @@
 
 
 
+{#            <div class="col">#}
+{#                <h2>Checklist Courses: Anchor</h2>#}
+{#                <table class="table">#}
+{#                    {% for course in anchor %}#}
+{#                    {% if course.anchorCourses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.anchorCourses|length }}</td></tr>{% endif %}#}
+{#                    {% endfor %}#}
+{#                </table>#}
+{#                <h2>Checklist Courses: Ecological</h2>#}
+{#                <table class="table">#}
+{#                    {% for course in sphere1 %}#}
+{#                        {% if course.sphere1Courses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.sphere1Courses|length }}</td></tr>{% endif %}#}
+{#                    {% endfor %}#}
+{#                </table>#}
+{#                <h2>Checklist Courses: Economic</h2>#}
+{#                <table class="table">#}
+{#                    {% for course in sphere2 %}#}
+{#                        {% if course.sphere2Courses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.sphere2Courses|length }}</td></tr>{% endif %}#}
+{#                    {% endfor %}#}
+{#                </table>#}
+{#                <h2>Checklist Courses: Social</h2>#}
+{#                <table class="table">#}
+{#                    {% for course in sphere3 %}#}
+{#                        {% if course.sphere3Courses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.sphere3Courses|length }}</td></tr>{% endif %}#}
+{#                    {% endfor %}#}
+{#                </table>#}
+{#                <h2>Checklist Courses: Seminar</h2>#}
+{#                <table class="table">#}
+{#                    {% for course in seminar %}#}
+{#                        {% if course.seminars|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.seminars|length }}</td></tr>{% endif %}#}
+{#                    {% endfor %}#}
+{#                </table>#}
+{#            </div>#}
+
             <div class="col">
                 <h2>Checklist Courses: Anchor</h2>
                 <table class="table">
                     {% for course in anchor %}
-                    {% if course.anchorCourses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.anchorCourses|length }}</td></tr>{% endif %}
+                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse}}</td></tr>
                     {% endfor %}
                 </table>
                 <h2>Checklist Courses: Ecological</h2>
                 <table class="table">
                     {% for course in sphere1 %}
-                        {% if course.sphere1Courses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.sphere1Courses|length }}</td></tr>{% endif %}
+                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
                     {% endfor %}
                 </table>
                 <h2>Checklist Courses: Economic</h2>
                 <table class="table">
                     {% for course in sphere2 %}
-                        {% if course.sphere2Courses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.sphere2Courses|length }}</td></tr>{% endif %}
+                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
                     {% endfor %}
                 </table>
                 <h2>Checklist Courses: Social</h2>
                 <table class="table">
                     {% for course in sphere3 %}
-                        {% if course.sphere3Courses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.sphere3Courses|length }}</td></tr>{% endif %}
+                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
                     {% endfor %}
                 </table>
                 <h2>Checklist Courses: Seminar</h2>
                 <table class="table">
                     {% for course in seminar %}
-                        {% if course.seminars|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.seminars|length }}</td></tr>{% endif %}
+                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
                     {% endfor %}
                 </table>
             </div>
