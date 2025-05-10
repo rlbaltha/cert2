@@ -58,10 +58,6 @@
             <th>Certificates(s)</th>
             <td>{{ user.certificates }}</td>
         </tr>
-        <tr>
-            <th>Portfolio</th>
-            <td><a target="_blank" href="{{ user.portfolio }}"> {{ user.portfolio }}</a></td>
-        </tr>
         </tbody>
     </table>
 
@@ -77,12 +73,12 @@
                     Checklist</a>
             <table class="table">
                 <tr>
-                    <th>Pre-Certificate Survey Completed</th>
-                    <td>{{ checklist.preAssess ? checklist.preAssess|date('Y-m-d H:i:s') : '' }}</td>
+                    <th>When did you complete the pre-Certificate Survey?</th>
+                    <td>{{ checklist.preAssess ? checklist.preAssess|date('M j, Y') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>Orientation</th>
-                    <td>{{ checklist.orientation ? checklist.orientation|date('Y-m-d H:i:s') : '' }}</td>
+                    <th>When did you attend the Certificate Info Session/Orientation?</th>
+                    <td>{{ checklist.orientation ? checklist.orientation|date('M j, Y') : '' }}</td>
                 </tr>
                 <tr>
                     <th>Seminar</th>
@@ -122,8 +118,12 @@
                     <td>{{ checklist.athena ? checklist.athena|date("M j, Y") : '' }}</td>
                 </tr>
                 <tr>
-                    <th>Post-Certificate Survey Completed</th>
+                    <th>When did you complete the post-Certificate Survey?</th>
                     <td>{{ checklist.postAssess ? checklist.postAssess|date("M j, Y") : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Portfolio</th>
+                    <td><a target="_blank" href="{{ user.portfolio }}"> {{ user.portfolio }}</a></td>
                 </tr>
                 </tbody>
             </table>
