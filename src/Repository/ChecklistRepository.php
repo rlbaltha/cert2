@@ -23,7 +23,7 @@ class ChecklistRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->join('c.anchor','a')
-            ->select('count(a.id) as countCourse, a.name as name')
+            ->select('count(a.id) as countCourse, a.name as name, a.id as id')
             ->groupBy('a.id')
             ->orderBy('countCourse', 'DESC')
             ->getQuery()
@@ -35,7 +35,7 @@ class ChecklistRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->join('c.sphere1','a')
-            ->select('count(a.id) as countCourse, a.name as name')
+            ->select('count(a.id) as countCourse, a.name as name, a.id as id')
             ->groupBy('a.id')
             ->orderBy('countCourse', 'DESC')
             ->getQuery()
@@ -47,7 +47,7 @@ class ChecklistRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->join('c.sphere2','a')
-            ->select('count(a.id) as countCourse, a.name as name')
+            ->select('count(a.id) as countCourse, a.name as name, a.id as id')
             ->groupBy('a.id')
             ->orderBy('countCourse', 'DESC')
             ->getQuery()
@@ -59,7 +59,7 @@ class ChecklistRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->join('c.sphere3','a')
-            ->select('count(a.id) as countCourse, a.name as name')
+            ->select('count(a.id) as countCourse, a.name as name, a.id as id')
             ->groupBy('a.id')
             ->orderBy('countCourse', 'DESC')
             ->getQuery()
@@ -71,7 +71,7 @@ class ChecklistRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->join('c.seminar','a')
-            ->select('count(a.id) as countCourse, a.name as name')
+            ->select('count(a.id) as countCourse, a.name as name, a.id as id')
             ->groupBy('a.id')
             ->orderBy('countCourse', 'DESC')
             ->getQuery()

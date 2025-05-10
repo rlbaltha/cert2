@@ -77,31 +77,31 @@
                 <h2>Checklist Courses: Anchor</h2>
                 <table class="table">
                     {% for course in anchor %}
-                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse}}</td></tr>
+                        <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse}}</td></tr>
                     {% endfor %}
                 </table>
                 <h2>Checklist Courses: Ecological</h2>
                 <table class="table">
                     {% for course in sphere1 %}
-                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
+                        <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
                     {% endfor %}
                 </table>
                 <h2>Checklist Courses: Economic</h2>
                 <table class="table">
                     {% for course in sphere2 %}
-                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
+                        <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
                     {% endfor %}
                 </table>
                 <h2>Checklist Courses: Social</h2>
                 <table class="table">
                     {% for course in sphere3 %}
-                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
+                        <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
                     {% endfor %}
                 </table>
                 <h2>Checklist Courses: Seminar</h2>
                 <table class="table">
                     {% for course in seminar %}
-                        <tr><td>{{ course.name }}</td> <td> {{ course.countCourse }}</td></tr>
+                        <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
                     {% endfor %}
                 </table>
             </div>
