@@ -105,4 +105,60 @@ class CourseRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function countByAnchor()
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.anchor_courses','a')
+            ->select('count(a.id) as countCourse, c.name as name, c.id as id')
+            ->groupBy('c.id')
+            ->orderBy('countCourse', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countBySphere1()
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.sphere1_courses','a')
+            ->select('count(a.id) as countCourse, c.name as name, c.id as id')
+            ->groupBy('c.id')
+            ->orderBy('countCourse', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countBySphere2()
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.sphere2_courses','a')
+            ->select('count(a.id) as countCourse, c.name as name, c.id as id')
+            ->groupBy('c.id')
+            ->orderBy('countCourse', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countBySphere3()
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.sphere3_courses','a')
+            ->select('count(a.id) as countCourse, c.name as name, c.id as id')
+            ->groupBy('c.id')
+            ->orderBy('countCourse', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countBySeminar()
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.seminars','a')
+            ->select('count(a.id) as countCourse, c.name as name, c.id as id')
+            ->groupBy('c.id')
+            ->orderBy('countCourse', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

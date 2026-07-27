@@ -43,6 +43,11 @@ class Application
      */
     private $goals;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $hearabout;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="applications")
@@ -171,6 +176,19 @@ class Application
     public function setGoals(?string $goals): self
     {
         $this->goals = $goals;
+
+        return $this;
+    }
+
+
+    public function getHearabout(): ?string
+    {
+        return $this->hearabout;
+    }
+
+    public function setHearabout(?string $hearabout): self
+    {
+        $this->hearabout = $hearabout;
 
         return $this;
     }

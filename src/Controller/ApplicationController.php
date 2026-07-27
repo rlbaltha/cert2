@@ -105,16 +105,12 @@ class ApplicationController extends AbstractController
         $username = $application->getUser()->getUsername();
         $user = $this->doctrine->getManager()->getRepository(User::class)->findOneByUsername($username);
         $user->setProgress('Checklist');
-        $portfolio = 'https://ctlsites.uga.edu/sustainability-' . $user->getFirstName() . $user->getLastName();
-        $user->setPortfolio(strtolower($portfolio));
         $application->setStatus('Approved');
         $this->doctrine->getManager()->persist($user);
         $this->doctrine->getManager()->persist($application);
         $this->doctrine->getManager()->flush();
 
         $emailer->sendEmail('application_approve', $user, $user->getEmail());
-
-        $emailer->sendEmail('create_portfolio', $user, 'christopher.pfeifer@uga.edu');
 
         $message = 'The application was approved and the student was sent an email';
         $this->addFlash('notice', $message);
