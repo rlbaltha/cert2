@@ -30,11 +30,11 @@ class DataController extends AbstractController
         $countByProgress = $this->doctrine->getManager()->getRepository(User::class)->countByProgress();
         $countByGrad = $this->doctrine->getManager()->getRepository(User::class)->countByGrad();
 
-        $anchor = $this->doctrine->getManager()->getRepository(Checklist::class)->countByAnchor();
-        $sphere1 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere1();
-        $sphere2 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere2();
-        $sphere3 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere3();
-        $seminar = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySeminar();
+//        $anchor = $this->doctrine->getManager()->getRepository(Checklist::class)->countByAnchor();
+//        $sphere1 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere1();
+//        $sphere2 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere2();
+//        $sphere3 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere3();
+//        $seminar = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySeminar();
 
         $anchor2 = $this->doctrine->getManager()->getRepository(Course::class)->countByAnchor();
         $sphere12 = $this->doctrine->getManager()->getRepository(Course::class)->countBySphere1();
@@ -55,11 +55,11 @@ class DataController extends AbstractController
 //            'countBySphere2' => $countBySphere2,
 //            'countBySphere3' => $countBySphere3,
 //            'countBySeminar' => $countBySeminar,
-            'anchor' => $anchor,
-            'sphere1' => $sphere1,
-            'sphere2' => $sphere2,
-            'sphere3' => $sphere3,
-            'seminar' => $seminar,
+//            'anchor' => $anchor,
+//            'sphere1' => $sphere1,
+//            'sphere2' => $sphere2,
+//            'sphere3' => $sphere3,
+//            'seminar' => $seminar,
             'anchor2' => $anchor2,
             'sphere12' => $sphere12,
             'sphere22' => $sphere22,
