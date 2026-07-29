@@ -23,7 +23,8 @@ security:
         - App\Security\UserAuthenticator
       logout:
         path: /logout
-        target: /login
+        target: /index
+
       switch_user: true
 
   role_hierarchy:

@@ -13,10 +13,10 @@ security:
 
             guard:
                 authenticators:
-                    - prayno.cas_authenticator
+                    - yraiso.cas_authenticator
             logout:
                 path: /logout
-                success_handler: PRayno\CasAuthBundle\Event\LogoutSuccessHandler
+                target: /index
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

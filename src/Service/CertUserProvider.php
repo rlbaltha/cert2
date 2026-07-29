@@ -4,14 +4,12 @@ namespace App\Service;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use PRayno\CasAuthBundle\Security\User\CasUserProvider;
-use PRayno\CasAuthBundle\Security\User\CasUser;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
-class CertUserProvider extends CasUserProvider implements UserProviderInterface
+class CertUserProvider implements UserProviderInterface
 {
 
     private $entityManager;
