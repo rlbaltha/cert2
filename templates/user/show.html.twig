@@ -58,6 +58,10 @@
             <th>Certificates(s)</th>
             <td>{{ user.certificates }}</td>
         </tr>
+        <tr>
+            <th>Portfolio</th>
+            <td><a target="_blank" href="{{ user.portfolio }}"> {{ user.portfolio }}</a></td>
+        </tr>
         </tbody>
     </table>
 
@@ -120,10 +124,6 @@
                 <tr>
                     <th>When did you complete the post-Certificate Survey?</th>
                     <td>{{ checklist.postAssess ? checklist.postAssess|date("M j, Y") : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Portfolio</th>
-                    <td><a target="_blank" href="{{ user.portfolio }}"> {{ user.portfolio }}</a></td>
                 </tr>
                 </tbody>
             </table>
