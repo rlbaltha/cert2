@@ -3,110 +3,153 @@
 {% block title %}Data  - {{ parent() }}{% endblock %}
 
 {% block body %}
-<div class="example-wrapper">
-    <h1>Certificate Data</h1>
+    <div class="example-wrapper">
+        <h1>Certificate Data</h1>
 
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h2>Students by Progress/Status</h2>
-                <table class="table">
-                    {% for progress in countByProgress %}
-                        <tr><td>{{ progress.name }}</td> <td>{{ progress.countProgress }}</td></tr>
-                    {% endfor %}
-                </table>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2>Students by Progress/Status</h2>
+                    <table class="table">
+                        {% for progress in countByProgress %}
+                            <tr><td>{{ progress.name }}</td> <td>{{ progress.countProgress }}</td></tr>
+                        {% endfor %}
+                    </table>
 
-                <h2>Students by Graduation Year</h2>
-                <table class="table">
-                    {% for year in countByGrad %}
-                    <tr><td>{{ year.year }}</td> <td> {{ year.countGrad }}</td></tr>
-                    {% endfor %}
-                </table>
+                    <h2>Students by Graduation Year</h2>
+                    <table class="table">
+                        {% for year in countByGrad %}
+                            <tr><td>{{ year.year }}</td> <td> {{ year.countGrad }}</td></tr>
+                        {% endfor %}
+                    </table>
 
-                <h2>Current Students by Schools</h2>
-                <table class="table">
-                    {% for school in countBySchool %}
-                    <tr><td>{{ school.name }}</td> <td> {{ school.countSchool }}</td></tr>
-                    {% endfor %}
-                </table>
+                    <h2>Current Students by Schools</h2>
+                    <table class="table">
+                        {% for school in countBySchool %}
+                            <tr><td>{{ school.name }}</td> <td> {{ school.countSchool }}</td></tr>
+                        {% endfor %}
+                    </table>
 
-                <h2>Current Students by Majors</h2>
-                <table class="table">
-                    {% for major in countByMajor %}
-                    <tr><td>{{ major.name }}</td> <td> {{ major.countMajor }}</td></tr>
-                    {% endfor %}
-                </table>
-            </div>
+                    <h2>Current Students by Majors</h2>
+                    <table class="table">
+                        {% for major in countByMajor %}
+                            <tr><td>{{ major.name }}</td> <td> {{ major.countMajor }}</td></tr>
+                        {% endfor %}
+                    </table>
+                </div>
 
 
 
-{#            <div class="col">#}
-{#                <h2>Checklist Courses: Anchor</h2>#}
-{#                <table class="table">#}
-{#                    {% for course in anchor %}#}
-{#                    {% if course.anchorCourses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.anchorCourses|length }}</td></tr>{% endif %}#}
-{#                    {% endfor %}#}
-{#                </table>#}
-{#                <h2>Checklist Courses: Ecological</h2>#}
-{#                <table class="table">#}
-{#                    {% for course in sphere1 %}#}
-{#                        {% if course.sphere1Courses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.sphere1Courses|length }}</td></tr>{% endif %}#}
-{#                    {% endfor %}#}
-{#                </table>#}
-{#                <h2>Checklist Courses: Economic</h2>#}
-{#                <table class="table">#}
-{#                    {% for course in sphere2 %}#}
-{#                        {% if course.sphere2Courses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.sphere2Courses|length }}</td></tr>{% endif %}#}
-{#                    {% endfor %}#}
-{#                </table>#}
-{#                <h2>Checklist Courses: Social</h2>#}
-{#                <table class="table">#}
-{#                    {% for course in sphere3 %}#}
-{#                        {% if course.sphere3Courses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.sphere3Courses|length }}</td></tr>{% endif %}#}
-{#                    {% endfor %}#}
-{#                </table>#}
-{#                <h2>Checklist Courses: Seminar</h2>#}
-{#                <table class="table">#}
-{#                    {% for course in seminar %}#}
-{#                        {% if course.seminars|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.seminars|length }}</td></tr>{% endif %}#}
-{#                    {% endfor %}#}
-{#                </table>#}
-{#            </div>#}
+                {#            <div class="col">#}
+                {#                <h2>Checklist Courses: Anchor</h2>#}
+                {#                <table class="table">#}
+                {#                    {% for course in anchor %}#}
+                {#                    {% if course.anchorCourses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.anchorCourses|length }}</td></tr>{% endif %}#}
+                {#                    {% endfor %}#}
+                {#                </table>#}
+                {#                <h2>Checklist Courses: Ecological</h2>#}
+                {#                <table class="table">#}
+                {#                    {% for course in sphere1 %}#}
+                {#                        {% if course.sphere1Courses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.sphere1Courses|length }}</td></tr>{% endif %}#}
+                {#                    {% endfor %}#}
+                {#                </table>#}
+                {#                <h2>Checklist Courses: Economic</h2>#}
+                {#                <table class="table">#}
+                {#                    {% for course in sphere2 %}#}
+                {#                        {% if course.sphere2Courses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.sphere2Courses|length }}</td></tr>{% endif %}#}
+                {#                    {% endfor %}#}
+                {#                </table>#}
+                {#                <h2>Checklist Courses: Social</h2>#}
+                {#                <table class="table">#}
+                {#                    {% for course in sphere3 %}#}
+                {#                        {% if course.sphere3Courses|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.sphere3Courses|length }}</td></tr>{% endif %}#}
+                {#                    {% endfor %}#}
+                {#                </table>#}
+                {#                <h2>Checklist Courses: Seminar</h2>#}
+                {#                <table class="table">#}
+                {#                    {% for course in seminar %}#}
+                {#                        {% if course.seminars|length > 0 %}<tr><td>{{ course.name }}</td> <td> {{ course.seminars|length }}</td></tr>{% endif %}#}
+                {#                    {% endfor %}#}
+                {#                </table>#}
+                {#            </div>#}
 
-            <div class="col">
-                <h2>Checklist Courses: Anchor</h2>
-                <table class="table">
-                    {% for course in anchor %}
-                        <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse}}</td></tr>
-                    {% endfor %}
-                </table>
-                <h2>Checklist Courses: Social</h2>
-                <table class="table">
-                    {% for course in sphere1 %}
-                        <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
-                    {% endfor %}
-                </table>
-                <h2>Checklist Courses: Economic</h2>
-                <table class="table">
-                    {% for course in sphere2 %}
-                        <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
-                    {% endfor %}
-                </table>
-                <h2>Checklist Courses: Ecological</h2>
-                <table class="table">
-                    {% for course in sphere3 %}
-                        <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
-                    {% endfor %}
-                </table>
-                <h2>Checklist Courses: Seminar</h2>
-                <table class="table">
-                    {% for course in seminar %}
-                        <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
-                    {% endfor %}
-                </table>
+                <div class="col">
+                    <h2>Checklist Courses: Anchor</h2>
+                    <table class="table">
+                        {% for course in anchor %}
+                            <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse}}</td></tr>
+                        {% endfor %}
+                    </table>
+
+                    <h2>Checklist Courses: Social</h2>
+                    <table class="table">
+                        {% for course in sphere1 %}
+                            <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
+                        {% endfor %}
+                    </table>
+
+                    <h2>Checklist Courses: Economic</h2>
+                    <table class="table">
+                        {% for course in sphere2 %}
+                            <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
+                        {% endfor %}
+                    </table>
+
+                    <h2>Checklist Courses: Ecological</h2>
+                    <table class="table">
+                        {% for course in sphere3 %}
+                            <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
+                        {% endfor %}
+                    </table>
+
+                    <h2>Checklist Courses: Seminar</h2>
+                    <table class="table">
+                        {% for course in seminar %}
+                            <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+                <div class="col">
+                    <h2>Checklist Courses: Anchor</h2>
+                    <table class="table">
+                        {% for course in anchor2 %}
+                            <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse}}</td></tr>
+                        {% endfor %}
+                    </table>
+
+                    <h2>Checklist Courses: Social</h2>
+                    <table class="table">
+                        {% for course in sphere12 %}
+                            <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
+                        {% endfor %}
+                    </table>
+
+                    <h2>Checklist Courses: Economic</h2>
+                    <table class="table">
+                        {% for course in sphere22 %}
+                            <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
+                        {% endfor %}
+                    </table>
+
+                    <h2>Checklist Courses: Ecological</h2>
+                    <table class="table">
+                        {% for course in sphere32 %}
+                            <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
+                        {% endfor %}
+                    </table>
+
+                    <h2>Checklist Courses: Seminar</h2>
+                    <table class="table">
+                        {% for course in seminar2 %}
+                            <tr><td><a href="{{ path('course_show', {'id': course.id}) }}">{{ course.name }}</a></td> <td> {{ course.countCourse }}</td></tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
 {% endblock %}

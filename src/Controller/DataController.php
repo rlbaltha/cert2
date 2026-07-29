@@ -36,11 +36,11 @@ class DataController extends AbstractController
         $sphere3 = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySphere3();
         $seminar = $this->doctrine->getManager()->getRepository(Checklist::class)->countBySeminar();
 
-//        $anchor = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('anchor');
-//        $sphere1 = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('ecological');
-//        $sphere2 = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('economic');
-//        $sphere3 = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('social');
-//        $seminar = $this->doctrine->getManager()->getRepository(Course::class)->findBySphere('seminar');
+        $anchor2 = $this->doctrine->getManager()->getRepository(Course::class)->countByAnchor();
+        $sphere12 = $this->doctrine->getManager()->getRepository(Course::class)->countBySphere1();
+        $sphere22 = $this->doctrine->getManager()->getRepository(Course::class)->countBySphere2();
+        $sphere32 = $this->doctrine->getManager()->getRepository(Course::class)->countBySphere3();
+        $seminar2 = $this->doctrine->getManager()->getRepository(Course::class)->countBySeminar();
 
 
 
@@ -60,6 +60,11 @@ class DataController extends AbstractController
             'sphere2' => $sphere2,
             'sphere3' => $sphere3,
             'seminar' => $seminar,
+            'anchor2' => $anchor2,
+            'sphere12' => $sphere12,
+            'sphere22' => $sphere22,
+            'sphere32' => $sphere32,
+            'seminar2' => $seminar2,
 
         ]);
     }

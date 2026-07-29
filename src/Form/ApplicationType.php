@@ -36,6 +36,9 @@ class ApplicationType extends AbstractType
             ->add('goals', TextareaType::class, [
                 'label' => 'What are your goals?',
             ])
+            ->add('hearabout', TextareaType::class, [
+                'label' => 'How did you hear about the Sustainability Certificate?',
+            ])
             ->add('status', ChoiceType::class, [
                 'choices' => [
                     'Still Editing' => 'Still Editing',
