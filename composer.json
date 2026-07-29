@@ -1,4 +1,10 @@
 {
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/rlbaltha/CasAuthBundle"
+        }
+    ],
     "type": "project",
     "license": "proprietary",
     "require": {
@@ -12,7 +18,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/orm": "2.11.*",
         "phpdocumentor/reflection-docblock": "^5.2",
-        "prayno/casauth-bundle": "^1.4",
+        "prayno/casauth-bundle": "dev-guzzle",
         "sensio/framework-extra-bundle": "^5.1",
         "stof/doctrine-extensions-bundle": "^1.6",
         "symfony/apache-pack": "^1.0",
